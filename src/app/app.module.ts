@@ -90,12 +90,12 @@ const formSetting: any = {
 
           token: {
             class: NbAuthJWTToken,
-            key: 'payload', // this parameter tells where to look for the token
+            key: 'jwt', // this parameter tells where to look for the token
           },
 
           baseEndpoint: environment.apiUrl,
           login: {
-            endpoint: '/api/Account/Login',
+            endpoint: '/api/user/sign-in',
             method: 'post',
             redirect: {
               success: 'pages/dashboard',
@@ -103,7 +103,7 @@ const formSetting: any = {
             },
           },
           register: {
-            endpoint: '/api/Auth/SignUp',
+            endpoint: '/api/user/sign-up',
             method: 'post',
             redirect: {
               success: 'auth/login',

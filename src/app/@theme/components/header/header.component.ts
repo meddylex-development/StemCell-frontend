@@ -2,10 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, filter } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 
+
 import { UtilitiesService } from 'app/shared/api/services/utilities.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -48,11 +50,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ 
+    { title: 'Mi perfil', url: 'auth/sign-out' }, 
+    { title: 'Cerrar sesión', url: 'auth/sign-out' },
+  ];
   items: Observable<any[]>;
   permissions: any = null;
 
   constructor(
+    private router: Router,
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private themeService: NbThemeService,
@@ -85,6 +91,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+      // this.menuService.onItemClick()
+      // .pipe(
+      //   filter(({ tag }) => tag === 'user-menu-header'),
+      //   map(({ item: { title } }) => title),
+      // )
+      // .subscribe((title) => {
+      //   console.log('title: ', title);
+      //   this.selectOptionMenu(title);
+      // });
+      this.menuService.onItemClick().subscribe((resp) => {
+        console.log('resp: ', resp);
+      });
   }
 
   fnGetDataAccess() {
@@ -130,5 +149,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  selectOptionMenu(title) {
+    console.log('title: ', title);
+    switch (title) {
+      case 'Cerrar sesión':
+        this.ngOnDestroy();
+        localStorage.clear();
+        sessionStorage.clear();
+        this.router.navigateByUrl('auth/login');
+        // this.authService.logout('email').subscribe(resp => {
+        //   console.log('resp: ', resp);
+        //   this.ngOnDestroy();
+        // })
+        break;
+      case 'Mi cuenta':
+        this.router.navigateByUrl('pages/my-account');
+        break;
+    }
   }
 }

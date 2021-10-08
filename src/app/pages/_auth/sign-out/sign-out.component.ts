@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NbLogoutComponent, NbAuthService, NbTokenService } from '@nebular/auth';
+import { UtilitiesService } from '../../../shared/api/services/utilities.service';
 
 @Component({
   selector: 'ngx-sign-out',
@@ -13,10 +14,11 @@ export class LogoutComponent implements OnInit {
 
   constructor(
     protected service: NbAuthService,
-    protected router: Router
+    protected router: Router,
+    private utilitiesService: UtilitiesService,
   ) {
     // this.redirectDelay = this.getConfigValue('forms.logout.redirectDelay');
-    this.strategy = 'user';
+    this.strategy = 'email';
   }
 
   ngOnInit(): void {
@@ -28,6 +30,7 @@ export class LogoutComponent implements OnInit {
 
       const redirect = result.getRedirect();
       if (redirect) {
+        this.utilitiesService.fnDestroySession();
         setTimeout(() => {
           return this.router.navigateByUrl(redirect);
         }, this.redirectDelay);

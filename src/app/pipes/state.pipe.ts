@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { UtilitiesService } from '../services/utilities.service';
+import { UtilitiesService } from '../shared/api/services/utilities.service';
 
 @Pipe({
   name: 'state'

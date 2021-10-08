@@ -24,7 +24,8 @@
     <nb-action *ngIf="accessModNotifications" class="control-item" icon="bell-outline"></nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user
-        *ngIf="accessModPictureProfile"
+        *ngIf="accessModPictureProfile" 
+        nbContextMenuTag="user-menu-header"
         [nbContextMenu]="userMenu"
         [onlyPicture]="userPictureOnly"
         [name]="user?.name"
