@@ -13,8 +13,7 @@ const routes: Routes = [{
       path: 'dashboard',
       // canActivate: [AuthGuard],
       component: DashboardComponent,
-    },
-    {
+    }, {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',
