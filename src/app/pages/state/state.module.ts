@@ -3,6 +3,7 @@ import { NbCardModule } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { StateComponent } from './state.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { StateComponent } from './state.component';
   ],
   declarations: [
     StateComponent,
+    ListComponent,
   ],
 })
 export class StateModule { }
