@@ -1,9 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { AuthGuard } from 'app/shared/api/services/auth-guard.service';
+
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AuthGuard } from 'app/shared/api/services/auth-guard.service';
+import { StateComponent } from './state/state.component';
 
 const routes: Routes = [{
   path: '',
@@ -13,6 +15,10 @@ const routes: Routes = [{
       path: 'dashboard',
       // canActivate: [AuthGuard],
       component: DashboardComponent,
+    }, {
+      path: 'state',
+      // canActivate: [AuthGuard],
+      component: StateComponent,
     }, {
       path: '',
       redirectTo: 'dashboard',
