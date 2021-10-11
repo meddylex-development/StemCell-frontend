@@ -50,7 +50,8 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.language = (this.utilitiesService.fnGetBrowserLocales()[1]).toUpperCase();
+    this.language = (this.utilitiesService.fnGetBrowserLocales().length > 1) ? (this.utilitiesService.fnGetBrowserLocales()[1]).toUpperCase() : 'ES';
+    this.utilitiesService.fnSetLocalStorage("lang", this.language);
     this.fnGetDataLanguages(this.language, this.nameComponent);
     this.fnGetDataAccess();
   }
@@ -58,18 +59,14 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
   fnGetDataAccess() {
     let urlLogo = 'UrlLogo';
     this.utilitiesService.fnGetDataFBCallback(urlLogo, (response) => {
-      console.log('response: ', response);
       this.urlLogo = response;
     });
   }
 
   fnGetDataLanguages(language, nameComponent) {
     let urlCollection = 'Languages/' + language + '/' + nameComponent;
-    console.log('urlCollection: ', urlCollection);
     this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
-      // console.log('response: ', response);
       this.DATA_LANG = response;
-      console.log('this.DATA_LANG: ', this.DATA_LANG);
     });
   }
 
@@ -79,7 +76,6 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
     self.messages = [];
     self.submitted = true;
     // self.user['getToken'] = true;
-    // console.log('self.user: ', self.user);
 
     const obj_user_account = {
       'password': self.user['password'],
@@ -87,22 +83,17 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
       // 'rememberMe': true,
       'getToken': true,
     };
-    console.log('obj_user_account: ', obj_user_account);
 
     // self.service.authenticate(self.strategy, obj_user_account).subscribe((resultAuth: NbAuthResult) => {
     //   if (resultAuth.isSuccess() && resultAuth.getMessages()[0]['status'] === 200) {
     //     self.messages = resultAuth.getMessages();
-    //     console.log('self.messages: ', self.messages);
     //     self.token = self.messages[0]['body']['jwt'];
-    //     console.log('self.token: ', self.token);
     //     self.utilitiesService.fnSetToken(self.token);
     //   }
     // },(error) => {
-    //   console.log('error: ', error);
     // });
 
     self.service.authenticate(self.strategy, obj_user_account).subscribe((result: NbAuthResult) => {
-      console.log('result: ', result);
       if (result.isSuccess()) {
         if (result['response']['status'] == 200){
           localStorage.setItem('userData', JSON.stringify(result['response']['body']['user']));

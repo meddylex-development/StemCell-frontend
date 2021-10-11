@@ -27,13 +27,13 @@ export class LogoutComponent implements OnInit {
 
   logout(strategy: string): void {
     this.service.logout(strategy).subscribe((result) => {
-
       const redirect = result.getRedirect();
       if (redirect) {
-        this.utilitiesService.fnDestroySession();
-        setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
-        }, this.redirectDelay);
+        this.utilitiesService.fnDestroySessionData((resp) => {
+          setTimeout(() => {
+            return this.router.navigateByUrl(redirect);
+          }, this.redirectDelay);
+        });
       }
     });
   }

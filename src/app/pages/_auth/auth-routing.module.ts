@@ -15,9 +15,6 @@ export const routes: Routes = [
       {
         path: 'login',
         component: NgxLoginComponent, // <---
-      },{
-        path: 'login',
-        component: NgxLoginComponent, // <---
       }, {
         path: 'sign-up',
         component: NgxRegisterComponent, // <---

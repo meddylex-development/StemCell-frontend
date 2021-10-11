@@ -9,10 +9,8 @@ export class StatePipe implements PipeTransform {
     private utilitiesService: UtilitiesService,
   ) {}
   transform(value: any, ...args: any[]): any {
-    console.log('value: ', value);
     return true;
     // this.utilitiesService.fnHttpSetCustomWebService('/estado/' + value, 'GET', null).subscribe(resp => {
-    //   console.log('resp: ', resp);
     //   // return null;
     // }, error => {
     //   return null;

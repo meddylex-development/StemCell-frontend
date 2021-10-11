@@ -41,7 +41,6 @@ export class OneColumnLayoutComponent implements OnInit, OnDestroy {
   fnGetDataAccess() {
     let url = 'PermissionAreas';
     this.utilitiesService.fnGetDataFBCallback(url, (response) => {
-      console.log('response: ', response);
       let dataAccess = response;
       this.accessHeader = dataAccess['header']['state'];
       this.accessMenu = dataAccess['menu']['state'];

@@ -70,7 +70,6 @@ export class ActivateAccountComponent extends NbResetPasswordComponent implement
   // }
 
   // getConfigValue(key: string): any {
-  //   console.log('key: ', key);
   //   return getDeepFromObject({}, 'name', null);
   // }
 

@@ -56,13 +56,13 @@ export class UtilitiesService {
     objectObserve(true);
   }
 
-  // fnGetHost() {
-  //   return environment.apiUrl;
-  // }
+  fnGetHost() {
+    return environment.apiUrl;
+  }
   
-  // fnGetSite() {
-  //   return environment.siteUrl;
-  // }
+  fnGetSite() {
+    // return environment.siteUrl;
+  }
 
   fnGetUser() {
     return sessionStorage.getItem('user');
@@ -81,9 +81,15 @@ export class UtilitiesService {
   fnGetSessionStorage(nameVar) {
     return sessionStorage.getItem(nameVar);
   }
-  fnGetLocalStorage(nameVar) {
+  async fnGetLocalStorage(nameVar) {
     return localStorage.getItem(nameVar);
   }
+
+  fnCapitalizeText(word) {
+    const lower = word.toLowerCase();
+    return word.charAt(0).toUpperCase() + lower.slice(1);
+  }
+
   fnSetStartDate(startDate) {
     localStorage.setItem('startDate', startDate);
   }
@@ -442,20 +448,14 @@ export class UtilitiesService {
 
   async fnGetDataFB(url_collection_query) {
     const self = this;
-    // console.log('url_collection_query: ', url_collection_query);
     // this.db.object(url_collection_query).valueChanges().subscribe((response) => {
-    //   console.log('response: ', response);
     //   return response;
     //   // this.dataFB = response;
-    //   // console.log('this.dataFB: ', this.dataFB);
     // });
-    console.log('url_collection_query: ', url_collection_query);
     return new Promise(function (resolve, reject) {
       self.db.object(url_collection_query).valueChanges().subscribe((response) => {
-        console.log('response: ', response);
         resolve(response);
         // this.dataFB = response;
-        // console.log('this.dataFB: ', this.dataFB);
       });
     });
   }

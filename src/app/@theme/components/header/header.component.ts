@@ -51,10 +51,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentTheme = 'default';
 
   userMenu = [ 
-    { title: 'Mi perfil', url: 'auth/sign-out' }, 
-    { title: 'Cerrar sesión', url: 'auth/sign-out' },
+    { id: 1, title: 'Mi perfil', urlComponent: 'auth/sign-out' }, 
+    { id: 2, title: 'Cerrar sesión', urlComponent: 'auth/sign-out' },
   ];
-  items: Observable<any[]>;
+  // items: Observable<any[]>;
   permissions: any = null;
 
   constructor(
@@ -65,17 +65,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private userService: UserData,
     private breakpointService: NbMediaBreakpointsService,
     private utilitiesService: UtilitiesService,
-  ) {
-  }
-
-  ngOnInit() {
-    this.currentTheme = this.themeService.currentTheme;
-
-    this.fnGetDataAccess();
+    ) {
+    }
+    
+    ngOnInit() {
+      this.currentTheme = this.themeService.currentTheme;
+      this.fnGetDataAccess();
+      this.menuService.onItemClick().subscribe((resp) => {
+        let idItemMenu = resp['item']['id'];
+        this.selectOptionMenu(idItemMenu);
+      });
 
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+      .subscribe((users: any) => {
+        this.user = users.nick;
+      });
+
+    this.utilitiesService.fnGetLocalStorage('userData').then(resp => {
+      let user = JSON.parse(resp);
+      this.user = { 
+        name: this.utilitiesService.fnCapitalizeText(user['firstName']) + ' ' + this.utilitiesService.fnCapitalizeText(user['lastName']), 
+        picture: 'assets/images/nick.png' 
+      };
+    });
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -92,30 +105,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(themeName => this.currentTheme = themeName);
 
-      // this.menuService.onItemClick()
-      // .pipe(
-      //   filter(({ tag }) => tag === 'user-menu-header'),
-      //   map(({ item: { title } }) => title),
-      // )
-      // .subscribe((title) => {
-      //   console.log('title: ', title);
-      //   this.selectOptionMenu(title);
-      // });
-      this.menuService.onItemClick().subscribe((resp) => {
-        console.log('resp: ', resp);
-      });
   }
 
   fnGetDataAccess() {
     let urlCollection = 'PermissionAreas';
     let urlLogo = 'UrlLogo';
     this.utilitiesService.fnGetDataFBCallback(urlLogo, (response) => {
-      console.log('response: ', response);
       this.urlLogo = response;
     });
     
     this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
-      console.log('response: ', response);
       let dataAccess = response;
       this.accessModDirectionSwitcher = dataAccess['modDirectionSwitcher']['state'];
       this.accessModThemeSelect = dataAccess['modThemeSelect']['state'];
@@ -125,7 +124,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.accessModEmail = dataAccess['modEmail']['state'];
       this.accessModNotifications = dataAccess['modNotifications']['state'];
       this.accessModPictureProfile = dataAccess['modPictureProfile']['state'];
-      console.log('this.accessModPictureProfile: ', this.accessModPictureProfile);
     });
 
 
@@ -151,21 +149,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  selectOptionMenu(title) {
-    console.log('title: ', title);
-    switch (title) {
-      case 'Cerrar sesión':
-        this.ngOnDestroy();
-        localStorage.clear();
-        sessionStorage.clear();
-        this.router.navigateByUrl('auth/login');
-        // this.authService.logout('email').subscribe(resp => {
-        //   console.log('resp: ', resp);
-        //   this.ngOnDestroy();
-        // })
-        break;
-      case 'Mi cuenta':
+  selectOptionMenu(idItemMenu) {
+    switch (idItemMenu) {
+      case 1:
         this.router.navigateByUrl('pages/my-account');
+        break;
+      case 2:
+        this.utilitiesService.fnDestroySessionData((resp) => {
+          this.ngOnDestroy();
+          this.router.navigateByUrl('auth/sign-out');
+        });
         break;
     }
   }
