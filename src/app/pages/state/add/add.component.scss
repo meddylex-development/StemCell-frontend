@@ -16,8 +16,4 @@
     .cursor-pointer {
         cursor: pointer;
     }
-
-    ::ng-deep .ngx-pagination > li.current {
-        border-radius: 15px;
-    }
 }

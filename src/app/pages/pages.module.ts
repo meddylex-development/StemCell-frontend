@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule } from '@nebular/theme';
+import { 
+  NbMenuModule, 
+  NbCardModule, 
+  NbTooltipModule, 
+} from '@nebular/theme';
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -9,8 +14,11 @@ import { PagesRoutingModule } from './pages-routing.module';
 @NgModule({
   imports: [
     PagesRoutingModule,
+    NgxPaginationModule,
     ThemeModule,
     NbMenuModule,
+    NbCardModule,
+    NbTooltipModule,
     DashboardModule,
   ],
   declarations: [

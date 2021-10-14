@@ -32,10 +32,12 @@
               "node_modules/socicon/css/socicon.css",
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/app/@theme/styles/styles.scss"
             ],
             "scripts": [
-              "node_modules/pace-js/pace.min.js"
+              "node_modules/pace-js/pace.min.js",
+              "node_modules/@fortawesome/fontawesome-free/js/all.js"
             ]
           },
           "configurations": {
@@ -89,7 +91,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
-              "node_modules/pace-js/pace.min.js"
+              "node_modules/pace-js/pace.min.js",
+              "node_modules/@fortawesome/fontawesome-free/js/all.js"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
@@ -99,6 +102,7 @@
               "node_modules/socicon/css/socicon.css",
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/app/@theme/styles/styles.scss"
             ],
             "assets": [

@@ -30,7 +30,8 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
-  NbWindowModule,
+  NbWindowModule, 
+  NbTooltipModule
 } from '@nebular/theme';
 import { 
   NbPasswordAuthStrategy, 
@@ -50,6 +51,9 @@ import { AuthInterceptorService } from './shared/api/services/auth-interceptor.s
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 /* ************* END - Import modules - base component and routing ************* */
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+
 
 export function setReturnDataMessages(module: string, res: HttpResponse<Object>): Object[] { return [res]; }
 export function setReturnDataErrors(module: string, res: HttpErrorResponse): Object[] { return [res]; }
@@ -67,10 +71,13 @@ const formSetting: any = {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
+    FontAwesomeModule,
     HttpClientModule,
     AppRoutingModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
+    NbTooltipModule,
     NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),

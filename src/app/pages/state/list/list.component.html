@@ -1,35 +1,89 @@
-<nb-card>
+<nb-card [size]="'large'" style="width: 100%;">
     <!-- <nb-card-header>Google Maps</nb-card-header> -->
     <nb-card-body>
-        <table class="table">
+        <h3>Administrador de estados</h3>
+        <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat commodi ducimus repellat saepe harum tenetur beatae id rerum nisi assumenda, error cumque dolore, voluptate quod sapiente vero tempore, vel neque?
+        </p>
+        <div class="mb-3 text-right">
+            <button (click)="showModalAdd(null)" type="button" class="btn btn-primary" nbTooltip="Agregar nuevo registro" nbButton>
+                <i class="fas fa-plus-circle cursor-pointer"></i>
+            </button>
+            &nbsp;
+            <button type="button" class="btn btn-danger" nbTooltip="Eliminar todos los registros" nbButton>
+                <i class="fas fa-trash-alt cursor-pointer"></i>
+            </button>
+        </div>
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th>
+                        Nombre&nbsp;
+                        <span nbTooltip="Ayuda">
+                            <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
+                        </span>
+                        <span nbTooltip="Ordenar" class="float-right">
+                            <i class="fas fa-sort cursor-pointer text-end"></i>
+                        </span>
+                    </th>
+                    <th>
+                        Descripci&oacute;n&nbsp;
+                        <span nbTooltip="Ayuda">
+                            <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
+                        </span>
+                        <span nbTooltip="Ordenar" class="float-right">
+                            <i class="fas fa-sort cursor-pointer text-end"></i>
+                        </span>
+                    </th>
+                    <th>
+                        Fecha de creaci&oacute;n&nbsp;
+                        <span nbTooltip="Ayuda">
+                            <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
+                        </span>
+                        <span nbTooltip="Ordenar" class="float-right">
+                            <i class="fas fa-sort cursor-pointer text-end"></i>
+                        </span>
+                    </th>
+                    <th>
+                        Fecha de actualizaci&oacute;n&nbsp;
+                        <span nbTooltip="Ayuda">
+                            <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
+                        </span>
+                        <span nbTooltip="Ordenar" class="float-right">
+                            <i class="fas fa-sort cursor-pointer text-end"></i>
+                        </span>
+                    </th>
+                    <!-- <th style="width: 40px;">&nbsp;</th> -->
+                    <th style="width: 40px;">&nbsp;</th>
+                    <th style="width: 40px;">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
+                <tr *ngFor="let item of collectionData | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index;">
+                    <td>{{ item?.name | titlecase }}</td>
+                    <td>{{ item?.description | titlecase }}</td>
+                    <td>{{ item?.dateCreated | date:"medium" }}</td>
+                    <td>{{ item?.dateUpdated | date:"medium" }}</td>
+                    <td>
+                        <span nbTooltip="Editar">
+                            <i class="fas fa-pencil-alt cursor-pointer text-warning" (click)="fnEdit(item)"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <span nbTooltip="Eliminar">
+                            <i class="fas fa-trash-alt cursor-pointer text-danger" (click)="fnDelete(item)"></i>
+                        </span>
+                    </td>
                 </tr>
             </tbody>
         </table>
+
+        <div style="display: flex; justify-content: space-around;">
+            <pagination-controls 
+                (pageChange)="currentPage = $event" 
+                previousLabel="Anterior"
+                nextLabel="Siguiente"
+            ></pagination-controls>
+        </div>
     </nb-card-body>
-  </nb-card>
+</nb-card>
