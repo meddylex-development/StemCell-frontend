@@ -42,8 +42,9 @@ export class ListComponent implements OnInit {
   }
 
   showModalAdd(data) {
-    data['data'] = data;
-    this.dialogService.open(AddComponent, { context: data }).onClose.subscribe((res) => {
+    let object_send = {};
+    object_send['data'] = data;
+    this.dialogService.open(AddComponent, { context: object_send }).onClose.subscribe((res) => {
       console.log('res: ', res);
       // this.fnGetAllDataUsersManagement(this.token, this.entity['iIdips']);
     });

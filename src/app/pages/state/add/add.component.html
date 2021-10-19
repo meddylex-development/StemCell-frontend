@@ -1,9 +1,55 @@
-<nb-card style="width: 100%;">
+<nb-card accent="info">
+    <nb-card-header style="display: flex; justify-content: space-between;">
+        <span>
+            Agregar nuevo estado
+        </span>
+        <span nbTooltip="Cerrar" style="cursor: pointer;">
+            <i class="fas fa-times"></i>
+        </span>
+    </nb-card-header>
     <nb-card-body>
-        <h3>Administrador de estados</h3>
-        <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat commodi ducimus repellat saepe harum tenetur beatae id rerum nisi assumenda, error cumque dolore, voluptate quod sapiente vero tempore, vel neque?
-        </p>
+        <div class="container ml-0 mr-0">
+            <div class="row ml-0 mr-0">
+                <div class="col ml-0 mr-0">
+                    <form (ngSubmit)="fnAddState(data)" style="width: 630px;" #addNewStateForm="ngForm" aria-labelledby="title">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">Email address</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="pgp-input_category_name">Nombre estado: </label>                                         
+                            <input 
+                            nbInput 
+                            [(ngModel)]="data.tNombre" 
+                            #groupName="ngModel"
+                            name="category_name" 
+                            autofocus  
+                            type="text"
+                            class="form-control"
+                            placeholder="Algo"
+                            style="height: 45px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="pgp-input_category_name">Descripci&oacute;n estado: </label>                                         
+                            <input 
+                            nbInput 
+                            [(ngModel)]="data.tNombre" 
+                            #groupName="ngModel"
+                            name="category_name" 
+                            autofocus  
+                            type="text"
+                            class="form-control"
+                            placeholder="Algo"
+                            style="height: 45px;">
+                        </div>
+                    </form>
+                </div>
+            </div>    
+        </div>
         
     </nb-card-body>
 </nb-card>
