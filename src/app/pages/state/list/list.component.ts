@@ -4,6 +4,9 @@ import {
   NbDialogService, 
 } from '@nebular/theme';
 import { AddComponent } from '../add/add.component';
+import { DeleteAllComponent } from '../delete-all/delete-all.component';
+import { DeleteComponent } from '../delete/delete.component';
+import { EditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'list',
@@ -42,19 +45,43 @@ export class ListComponent implements OnInit {
   }
 
   showModalAdd(data) {
-    data['data'] = data;
-    this.dialogService.open(AddComponent, { context: data }).onClose.subscribe((res) => {
+    console.log('data: ', data);
+    let dataSend = {};
+    dataSend['data'] = data;
+    this.dialogService.open(AddComponent, { context: dataSend }).onClose.subscribe((res) => {
       console.log('res: ', res);
       // this.fnGetAllDataUsersManagement(this.token, this.entity['iIdips']);
     });
   }
 
-  fnEdit(item) {
-    console.log('item: ', item);
+  showModalEdit(data) {
+    console.log('data: ', data);
+    let dataSend = {};
+    dataSend['data'] = data;
+    this.dialogService.open(EditComponent, { context: dataSend }).onClose.subscribe((res) => {
+      console.log('res: ', res);
+      // this.fnGetAllDataUsersManagement(this.token, this.entity['iIdips']);
+    });
   }
 
-  fnDelete(item) {
-    console.log('item: ', item);
+  showModalDelete(data) {
+    console.log('data: ', data);
+    let dataSend = {};
+    dataSend['data'] = data;
+    this.dialogService.open(DeleteComponent, { context: dataSend }).onClose.subscribe((res) => {
+      console.log('res: ', res);
+      // this.fnGetAllDataUsersManagement(this.token, this.entity['iIdips']);
+    });
+  }
+
+  showModalDeleteAll(data) {
+    console.log('data: ', data);
+    let dataSend = {};
+    dataSend['data'] = data;
+    this.dialogService.open(DeleteAllComponent, { context: dataSend }).onClose.subscribe((res) => {
+      console.log('res: ', res);
+      // this.fnGetAllDataUsersManagement(this.token, this.entity['iIdips']);
+    });
   }
 
 }

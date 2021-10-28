@@ -1,23 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
-  selector: 'add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  selector: 'edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss']
 })
-export class AddComponent implements OnInit {
+export class EditComponent implements OnInit {
 
   @Input() data: any;
   current_payload: string = null;
   submitted: boolean = false;
 
   constructor(
-    protected ref: NbDialogRef<AddComponent>,
+    protected ref: NbDialogRef<EditComponent>,
   ) { }
 
   ngOnInit(): void {
-    console.log('data: ', this.data);
   }
 
   fnAddData(data) {

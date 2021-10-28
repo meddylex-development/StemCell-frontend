@@ -1,16 +1,33 @@
 <nb-card [size]="'large'" style="width: 100%;">
     <!-- <nb-card-header>Google Maps</nb-card-header> -->
     <nb-card-body>
-        <h3>Administrador de estados</h3>
+        <h3>
+            Administrador de estados
+            <span nbTooltip="Ayuda">
+                <i class="far fa-question-circle cursor-pointer text-end text-primary" style="width: 1.2rem;"></i>
+            </span>
+        </h3>
         <p>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat commodi ducimus repellat saepe harum tenetur beatae id rerum nisi assumenda, error cumque dolore, voluptate quod sapiente vero tempore, vel neque?
         </p>
         <div class="mb-3 text-right">
-            <button (click)="showModalAdd(null)" type="button" class="btn btn-primary" nbTooltip="Agregar nuevo registro" nbButton>
+            <!-- <button (click)="showModalAdd(null)" type="button" class="btn btn-primary" nbTooltip="Agregar nuevo registro" nbButton>
+                <i class="fas fa-plus-circle cursor-pointer"></i>
+            </button> -->
+            <button 
+                nbButton 
+                status="primary"
+                (click)="showModalAdd(null)">
                 <i class="fas fa-plus-circle cursor-pointer"></i>
             </button>
             &nbsp;
-            <button type="button" class="btn btn-danger" nbTooltip="Eliminar todos los registros" nbButton>
+            <!-- <button type="button" class="btn btn-danger" nbTooltip="Eliminar todos los registros" nbButton>
+                <i class="fas fa-trash-alt cursor-pointer"></i>
+            </button> -->
+            <button 
+                nbButton 
+                (click)="showModalDeleteAll(null)"
+                style="background-color: #dc3545 !important; color: #fff;">
                 <i class="fas fa-trash-alt cursor-pointer"></i>
             </button>
         </div>
@@ -65,13 +82,13 @@
                     <td>{{ item?.dateCreated | date:"medium" }}</td>
                     <td>{{ item?.dateUpdated | date:"medium" }}</td>
                     <td>
-                        <span nbTooltip="Editar">
-                            <i class="fas fa-pencil-alt cursor-pointer text-warning" (click)="fnEdit(item)"></i>
+                        <span nbTooltip="Editar" (click)="showModalEdit(item)">
+                            <i class="fas fa-pencil-alt cursor-pointer text-warning"></i>
                         </span>
                     </td>
                     <td>
-                        <span nbTooltip="Eliminar">
-                            <i class="fas fa-trash-alt cursor-pointer text-danger" (click)="fnDelete(item)"></i>
+                        <span nbTooltip="Eliminar" (click)="showModalDelete(item)">
+                            <i class="fas fa-trash-alt cursor-pointer text-danger"></i>
                         </span>
                     </td>
                 </tr>
