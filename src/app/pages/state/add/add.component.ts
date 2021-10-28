@@ -37,4 +37,8 @@ export class AddComponent implements OnInit {
     this.dismiss();
   }
 
+  fnAddState(data) {
+    console.log('data: ', data);
+  }
+
 }
