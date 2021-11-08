@@ -7,14 +7,13 @@ import {
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 
 import { UtilitiesService } from 'app/shared/api/services/utilities.service';
-import { StateService } from 'app/shared/api/services/state.service';
 
 @Component({
-  selector: 'add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  selector: 'help',
+  templateUrl: './help.component.html',
+  styleUrls: ['./help.component.scss']
 })
-export class AddComponent implements OnInit {
+export class HelpComponent implements OnInit {
 
   @Input() data: any;
   public token: string = '';
@@ -23,11 +22,10 @@ export class AddComponent implements OnInit {
   public state: any = {};
   
   constructor(
-    protected ref: NbDialogRef<AddComponent>,
+    protected ref: NbDialogRef<HelpComponent>,
     private dialogService: NbDialogService,
     private authService: NbAuthService,
     private utilitiesService: UtilitiesService,
-    private stateService: StateService,
   ) { }
 
   ngOnInit(): void {
@@ -42,28 +40,11 @@ export class AddComponent implements OnInit {
     });
   }
 
-  fnAddData(data) {
-    console.log('data: ', data.value);
-    console.log('state: ', this.state);
-    // this.submitted = true;
-    this.stateService.fnHttpSetAddNewState(this.token, this.state).subscribe(response => {
-      console.log('response: ', response);
-      const data = response;
-      if (data['status'] == 200) {
-        this.utilitiesService.showToast('top-right', 'success', 'Estado agregado satisfactoriamente!', 'nb-alert');
-        this.dismiss(true);
-      } else {
-        this.utilitiesService.showToast('top-right', 'danger', 'El estado no se pudo agregar. Intentelo nuevament!', 'nb-alert');
-        this.dismiss(false);
-      }
-    });
-  }
-
   dismiss(res?) {
     this.ref.close(res);
   }
 
-  fnCancelAddData() {
+  fnCancelData() {
     // this.submitted = false;
     this.dismiss();
   }

@@ -14,12 +14,21 @@
   <ngx-layout-direction-switcher *ngIf="accessModDirectionSwitcher" class="direction-switcher"></ngx-layout-direction-switcher>
 </div>
 
+
+
 <div class="header-container">
   <nb-actions size="small">
+
+    <nb-action>
+      <span class="header-container cursor-pointer" nbTooltip="Lenguaje {{ language }}" nbTooltipPlacement="bottom">
+        <img src="../../../../assets/icons/flags/flag-{{ language.toLowerCase() }}.png" width="20" height="20" alt="language-{{ language }}">
+      </span>     
+    </nb-action>
 
     <nb-action *ngIf="accessModSearch" class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
+    
     <nb-action *ngIf="accessModEmail" class="control-item" icon="email-outline"></nb-action>
     <nb-action *ngIf="accessModNotifications" class="control-item" icon="bell-outline"></nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">

@@ -8,6 +8,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 import { 
   HttpClientModule, 
@@ -31,7 +32,11 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule, 
-  NbTooltipModule
+  NbTooltipModule,
+  NbCardModule,
+  NbActionsModule,
+  NbButtonModule,
+  NbInputModule,
 } from '@nebular/theme';
 import { 
   NbPasswordAuthStrategy, 
@@ -50,6 +55,7 @@ import { AuthInterceptorService } from './shared/api/services/auth-interceptor.s
 /* ************ START - Import modules - base component and routing ************ */
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HelpComponent } from './shared/components/modals/help/help.component';
 /* ************* END - Import modules - base component and routing ************* */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
@@ -67,14 +73,20 @@ const formSetting: any = {
 };
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HelpComponent],
   imports: [
+    FormsModule,
     BrowserModule,
+    NbActionsModule,
+    NbTooltipModule, 
+    NbButtonModule,
+    NbInputModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
     FontAwesomeModule,
     HttpClientModule,
     AppRoutingModule,
+    NbCardModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbTooltipModule,

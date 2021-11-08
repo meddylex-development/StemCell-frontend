@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Observer } from 'rxjs';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import { NbToastrService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
+
+import { HelpComponent } from '../../components/modals/help/help.component'
 
 
 import { environment } from '../../../../environments/environment';
@@ -17,6 +19,7 @@ export class UtilitiesService {
 
   private index: number = 0;
   private dataFB: any = null;
+  public token: string = '';
 
   constructor(
     private router: Router,
@@ -24,6 +27,7 @@ export class UtilitiesService {
     private authService: NbAuthService,
     private toastrService: NbToastrService,
     private db: AngularFireDatabase,
+    private dialogService: NbDialogService,
   ) {
   }
 
@@ -499,6 +503,87 @@ export class UtilitiesService {
 
   fnStringUpperCase(text: string) {
     return text.toUpperCase();
+  }
+
+  fnAuthValidUser() {
+    return new Promise((resolve, reject) => {
+      this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
+        if (token.isValid()) {
+          this.token = token.getValue();
+          let userData = token.getPayload();
+          resolve({ state: true, token: this.token, user: userData });
+        } else {
+          reject({state: false, token: null, user: null});
+        }
+      });
+    })
+  }
+
+  fnSignOutUser() {
+    return new Promise((resolve, reject) => {
+      if (true) {
+        localStorage.clear();
+        sessionStorage.clear();
+        resolve(true);
+      } else {
+        reject(false);
+      }
+    });
+  }
+
+  fnNavigateByUrl(url: string) {
+    this.router.navigateByUrl(url);
+  }
+
+  fnShowModalHelp(moduleName?, columnName?, title?, description?) {
+    let dataSend = {};
+    dataSend['data'] = { module: moduleName, column: columnName, title:title, description: description };
+    this.dialogService.open(HelpComponent, { context: dataSend }).onClose.subscribe((res) => {
+      console.log('res: ', res);
+    });
+  }
+
+  fnSortArrayByProperty(collection, field) {
+    return new Promise((resolve, reject) => {
+      // let OrderedCollection = collection.sort(function(a, b) {
+      //   let fieldA = a[field];
+      //   console.log('fieldA: ', fieldA);
+      //   let fieldB = b[field];
+      //   console.log('fieldB: ', fieldB);
+      //   let result = fieldA - fieldB;
+      //   console.log('result: ', result);
+      //   return result;
+      // });
+      // if (OrderedCollection.length > 0) {
+      //   resolve(OrderedCollection);
+      // } else {
+      //   reject(false);
+      // }
+    });
+  }
+
+  compareValues(key, order = 'ASC') {
+    return function innerSort(a, b) {
+      if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+        // property doesn't exist on either object
+        return 0;
+      }
+  
+      const varA = (typeof a[key] === 'string')
+        ? a[key].toUpperCase() : a[key];
+      const varB = (typeof b[key] === 'string')
+        ? b[key].toUpperCase() : b[key];
+  
+      let comparison = 0;
+      if (varA > varB) {
+        comparison = 1;
+      } else if (varA < varB) {
+        comparison = -1;
+      }
+      return (
+        (order === 'DESC') ? (comparison * -1) : comparison
+      );
+    };
   }
 
 }

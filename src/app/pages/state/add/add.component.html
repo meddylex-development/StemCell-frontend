@@ -10,10 +10,13 @@
             <form (ngSubmit)="fnAddData(addStateForm)" style="width: 350px;" #addStateForm="ngForm" aria-labelledby="title">
               <div class="col-12 pl-0 pr-0">
                 <div class="form-group">
-                  <label for="input-stateName">Nombre estado:&nbsp;&nbsp;<span class="text-danger">*</span></label>                                         
+                  <label for="input-stateName">Nombre estado:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="Campo obligatorio">*</span></label>                                         
                   <input 
                     nbInput 
                     fullWidth 
+                    #stateName="ngModel"
+                    [(ngModel)]="state.name"
+                    [status]="'info'"
                     [required]="true"
                     name="stateName" 
                     id="input-stateName" 
@@ -26,7 +29,7 @@
               </div>
               <div class="col-12 pl-0 pr-0">
                 <div class="form-group">
-                  <label for="input-stateDescription">Descripci&oacute;n estado:&nbsp;&nbsp;<span class="text-danger">*</span></label>                                         
+                  <label for="input-stateDescription">Descripci&oacute;n estado:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="Campo obligatorio">*</span></label>                                         
                   <!-- <input 
                     nbInput 
                     fullWidth 
@@ -39,6 +42,9 @@
                     placeholder="Ingrese nombre estado"
                     style="height: 45px;"> -->
                     <textarea 
+                        #stateDescription="ngModel"
+                        [(ngModel)]="state.description"
+                        [status]="'info'"
                         class="form-control" 
                         name="stateDescription" 
                         id="input-stateDescription" 
@@ -53,6 +59,7 @@
                   nbButton 
                   fullWidth 
                   type="submit"
+                  [class.btn-pulse]="submitted"
                   style="background-color: #3366ff; border-color: #3366ff; color: white;">
                   Guardar
               </button>

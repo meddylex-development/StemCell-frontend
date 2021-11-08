@@ -8,20 +8,4 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-
-    ::ng-deep .cursor-pointer {
-        cursor: pointer;
-    }
-
-    ::ng-deep .nb-theme-default nb-card-header {
-        display: block !important;
-    }
-    
-    .cursor-pointer {
-        cursor: pointer;
-    }
-
-    ::ng-deep .ngx-pagination > li.current {
-        border-radius: 15px;
-    }
 }

@@ -2,92 +2,96 @@
     <!-- <nb-card-header>Google Maps</nb-card-header> -->
     <nb-card-body>
         <h3>
-            Administrador de estados
-            <span nbTooltip="Ayuda">
+            {{ DATA_LANG?.lblTitle?.text }}
+            <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp('state', '', 'Administración de estados', 'Esto es una descripcion del estado!')">
                 <i class="far fa-question-circle cursor-pointer text-end text-primary" style="width: 1.2rem;"></i>
             </span>
         </h3>
         <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat commodi ducimus repellat saepe harum tenetur beatae id rerum nisi assumenda, error cumque dolore, voluptate quod sapiente vero tempore, vel neque?
+            {{ DATA_LANG?.lblDescription?.text }}
         </p>
         <div class="mb-3 text-right">
-            <!-- <button (click)="showModalAdd(null)" type="button" class="btn btn-primary" nbTooltip="Agregar nuevo registro" nbButton>
-                <i class="fas fa-plus-circle cursor-pointer"></i>
-            </button> -->
             <button 
+                nbTooltip="{{ DATA_LANG?.lblAddStateTooltip?.text }}"
                 nbButton 
                 status="primary"
                 (click)="showModalAdd(null)">
                 <i class="fas fa-plus-circle cursor-pointer"></i>
             </button>
             &nbsp;
-            <!-- <button type="button" class="btn btn-danger" nbTooltip="Eliminar todos los registros" nbButton>
-                <i class="fas fa-trash-alt cursor-pointer"></i>
-            </button> -->
             <button 
                 nbButton 
+                nbTooltip="{{ DATA_LANG?.lblDeleteAllStateTooltip?.text }}"
                 (click)="showModalDeleteAll(null)"
                 style="background-color: #dc3545 !important; color: #fff;">
                 <i class="fas fa-trash-alt cursor-pointer"></i>
             </button>
         </div>
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th>
-                        Nombre&nbsp;
-                        <span nbTooltip="Ayuda">
+                        {{ DATA_LANG?.lblColName?.text }}&nbsp;
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp('state', 'name', 'Nombre estado', 'Esto es una descripcion del estado!')">
                             <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
                         </span>
-                        <span nbTooltip="Ordenar" class="float-right">
-                            <i class="fas fa-sort cursor-pointer text-end"></i>
+                        <span nbTooltip="{{ (typeSort[0]['state'] == 'DEFAULT') ? 'Listado por defecto': (typeSort[0]['state'] == 'DESC') ? 'Orden descendente' : 'Orden ascendente' }}" class="float-right" (click)="fnOrderList('name', collectionData, typeSort, 0)">
+                            <i class="fas cursor-pointer text-end" [ngClass]="{'fa-sort': typeSort[0]['state'] == 'DEFAULT', 'fa-sort-up': typeSort[0]['state'] == 'ASC', 'fa-sort-down': typeSort[0]['state'] == 'DESC'}"></i>
                         </span>
                     </th>
                     <th>
-                        Descripci&oacute;n&nbsp;
-                        <span nbTooltip="Ayuda">
+                        {{ DATA_LANG?.lblColDescription?.text }}&nbsp;
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp('state', 'description', 'Descripción estado', 'Esto es una descripcion del estado!')">
                             <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
                         </span>
-                        <span nbTooltip="Ordenar" class="float-right">
-                            <i class="fas fa-sort cursor-pointer text-end"></i>
+                        <span nbTooltip="{{ (typeSort[1]['state'] == 'DEFAULT') ? 'Listado por defecto': (typeSort[1]['state'] == 'DESC') ? 'Orden descendente' : 'Orden ascendente' }}" class="float-right" (click)="fnOrderList('description', collectionData, typeSort, 1)">
+                            <i class="fas cursor-pointer text-end" [ngClass]="{'fa-sort': typeSort[1]['state'] == 'DEFAULT', 'fa-sort-up': typeSort[1]['state'] == 'ASC', 'fa-sort-down': typeSort[1]['state'] == 'DESC'}"></i>
                         </span>
                     </th>
                     <th>
-                        Fecha de creaci&oacute;n&nbsp;
-                        <span nbTooltip="Ayuda">
+                        {{ DATA_LANG?.lblColDateCreated?.text }}&nbsp;
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp('state', 'description', 'Fecha creación estado', 'Esto es una descripcion del estado!')">
                             <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
                         </span>
-                        <span nbTooltip="Ordenar" class="float-right">
-                            <i class="fas fa-sort cursor-pointer text-end"></i>
+                        <span nbTooltip="{{ (typeSort[2]['state'] == 'DEFAULT') ? 'Listado por defecto': (typeSort[2]['state'] == 'DESC') ? 'Orden descendente' : 'Orden ascendente' }}" class="float-right" (click)="fnOrderList('dateCreated', collectionData, typeSort, 2)">
+                            <i class="fas cursor-pointer text-end" [ngClass]="{'fa-sort': typeSort[2]['state'] == 'DEFAULT', 'fa-sort-up': typeSort[2]['state'] == 'ASC', 'fa-sort-down': typeSort[2]['state'] == 'DESC'}"></i>
                         </span>
                     </th>
                     <th>
-                        Fecha de actualizaci&oacute;n&nbsp;
-                        <span nbTooltip="Ayuda">
+                        {{ DATA_LANG?.lblColDateUpdated?.text }}&nbsp;
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp('state', 'description', 'Fecha actualización estado', 'Esto es una descripcion del estado!')">
                             <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
                         </span>
-                        <span nbTooltip="Ordenar" class="float-right">
-                            <i class="fas fa-sort cursor-pointer text-end"></i>
+                        <span nbTooltip="{{ (typeSort[3]['state'] == 'DEFAULT') ? 'Listado por defecto': (typeSort[3]['state'] == 'DESC') ? 'Orden descendente' : 'Orden ascendente' }}" class="float-right" (click)="fnOrderList('dateUpdated', collectionData, typeSort, 3)">
+                            <i class="fas cursor-pointer text-end" [ngClass]="{'fa-sort': typeSort[3]['state'] == 'DEFAULT', 'fa-sort-up': typeSort[3]['state'] == 'ASC', 'fa-sort-down': typeSort[3]['state'] == 'DESC'}"></i>
                         </span>
                     </th>
                     <!-- <th style="width: 40px;">&nbsp;</th> -->
-                    <th style="width: 40px;">&nbsp;</th>
-                    <th style="width: 40px;">&nbsp;</th>
+                    <th style="width: 40px;">
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp('state', 'edit', 'Columna de acción editar', 'Esto es una descripcion de la columna de editar!')">
+                            <i class="far fa-question-circle cursor-pointer text-end text-primary" style="width: 1.2rem;"></i>
+                        </span>
+                    </th>
+                    <th style="width: 40px;">
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp('state', 'delete', 'Columna de acción eliminar', 'Esto es una descripcion de la columna de eliminar!')">
+                            <i class="far fa-question-circle cursor-pointer text-end text-primary" style="width: 1.2rem;"></i>
+                        </span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let item of collectionData | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index;">
                     <td>{{ item?.name | titlecase }}</td>
-                    <td>{{ item?.description | titlecase }}</td>
+                    <td>{{ item?.description }}</td>
                     <td>{{ item?.dateCreated | date:"medium" }}</td>
                     <td>{{ item?.dateUpdated | date:"medium" }}</td>
                     <td>
-                        <span nbTooltip="Editar" (click)="showModalEdit(item)">
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblEditTooltip?.text }}" (click)="showModalEdit(item)">
                             <i class="fas fa-pencil-alt cursor-pointer text-warning"></i>
                         </span>
                     </td>
                     <td>
-                        <span nbTooltip="Eliminar" (click)="showModalDelete(item)">
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblDeleteTooltip?.text }}" (click)="showModalDelete(item)">
                             <i class="fas fa-trash-alt cursor-pointer text-danger"></i>
                         </span>
                     </td>
@@ -98,8 +102,8 @@
         <div style="display: flex; justify-content: space-around;">
             <pagination-controls 
                 (pageChange)="currentPage = $event" 
-                previousLabel="Anterior"
-                nextLabel="Siguiente"
+                previousLabel="{{ DATA_LANG_GENERAL?.lblPreviousPagination?.text }}"
+                nextLabel="{{ DATA_LANG_GENERAL?.lblNextPagination?.text }}"
             ></pagination-controls>
         </div>
     </nb-card-body>

@@ -48,6 +48,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
+  itemsLanguages = [
+    { id: 1, name: 'Español', icon: '../../../../assets/icons/flags/flag-spain.png' },
+    { id: 2, name: 'English', icon: '../../../../assets/icons/flags/flag-uk.png' },
+  ]
+
   currentTheme = 'default';
 
   userMenu = [ 
@@ -56,6 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
   // items: Observable<any[]>;
   permissions: any = null;
+  language: string = '';
 
   constructor(
     private router: Router,
@@ -69,6 +75,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit() {
+
+      this.language = (this.utilitiesService.fnGetBrowserLocales().length > 1) ? (this.utilitiesService.fnGetBrowserLocales()[1]).toUpperCase() : 'ES';
+
       this.currentTheme = this.themeService.currentTheme;
       this.fnGetDataAccess();
       this.menuService.onItemClick().subscribe((resp) => {
@@ -136,6 +145,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   changeTheme(themeName: string) {
     this.themeService.changeTheme(themeName);
+  }
+
+  changeLanguage(event) {
+    console.log('event: ', event);
   }
 
   toggleSidebar(): boolean {
