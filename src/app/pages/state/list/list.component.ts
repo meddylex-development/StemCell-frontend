@@ -66,6 +66,7 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
 
     this.language = (this.utilitiesService.fnGetBrowserLocales().length > 1) ? (this.utilitiesService.fnGetBrowserLocales()[1]).toUpperCase() : 'ES';
+    // this.language = 'EN';
     this.utilitiesService.fnSetLocalStorage("lang", this.language);
     this.fnGetDataLanguages(this.language, this.nameComponent);
     this.fnGetDataGeneralLanguages(this.language);
@@ -150,6 +151,10 @@ export class ListComponent implements OnInit {
   }
 
   fnOrderList(columnName, collectionData, typeSort, index) {
+    console.log('columnName: ', columnName);
+    console.log('collectionData: ', collectionData);
+    console.log('typeSort: ', typeSort);
+    console.log('index: ', index);
 
     this.typeSort.forEach((element, key) => {
       if(key != index) {
@@ -157,10 +162,13 @@ export class ListComponent implements OnInit {
       }
     });
 
+    console.log('typeSort[index]["state"]: ', typeSort[index]['state']);
     switch (typeSort[index]['state']) {
       case 'DEFAULT':
         this.typeSort[index]['state'] = 'ASC';
+        console.log('typeSort[index]["state"]: ', typeSort[index]['state']);
         this.collectionData = collectionData.sort(this.utilitiesService.compareValues(columnName, this.typeSort[index]['state']));
+        console.log('this.collectionData: ', this.collectionData);
         break;
       case 'ASC':
         this.typeSort[index]['state'] = 'DESC';
