@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-header style="display: flex; justify-content: space-between;">
-        Agregar nuevo estado
+        {{ DATA_LANG?.mdlAddTitle?.text }}
         <span (click)="fnCloseModal()" nbTooltip="Cerrar">
             <i class="fas fa-times cursor-pointer text-danger"></i>
         </span>
@@ -10,7 +10,7 @@
             <form (ngSubmit)="fnAddData(addStateForm)" style="width: 350px;" #addStateForm="ngForm" aria-labelledby="title">
               <div class="col-12 pl-0 pr-0">
                 <div class="form-group">
-                  <label for="input-stateName">Nombre estado:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="Campo obligatorio">*</span></label>                                         
+                  <label for="input-stateName">{{ DATA_LANG?.mdlLblAddStatusName?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="Campo obligatorio">*</span></label>                                         
                   <input 
                     nbInput 
                     fullWidth 
@@ -29,7 +29,7 @@
               </div>
               <div class="col-12 pl-0 pr-0">
                 <div class="form-group">
-                  <label for="input-stateDescription">Descripci&oacute;n estado:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="Campo obligatorio">*</span></label>                                         
+                  <label for="input-stateDescription">{{ DATA_LANG?.mdlLblAddStatusDescription?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="Campo obligatorio">*</span></label>                                         
                   <!-- <input 
                     nbInput 
                     fullWidth 

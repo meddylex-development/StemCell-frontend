@@ -21,6 +21,11 @@ export class AddComponent implements OnInit {
   public userData: any = null; 
   public submitted: boolean = false;
   public state: any = {};
+
+  public DATA_LANG: any = null;
+  public DATA_LANG_GENERAL: any = null;
+  public language: string = '';
+  public nameComponent: string = 'stateComponent';
   
   constructor(
     protected ref: NbDialogRef<AddComponent>,
@@ -31,14 +36,35 @@ export class AddComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.language = (this.utilitiesService.fnGetBrowserLocales().length > 1) ? (this.utilitiesService.fnGetBrowserLocales()[1]).toUpperCase() : 'ES';
+    // this.language = 'EN';
+    this.utilitiesService.fnSetLocalStorage("lang", this.language);
+    this.fnGetDataLanguages(this.language, this.nameComponent);
+    this.fnGetDataGeneralLanguages(this.language);
+
     this.utilitiesService.fnAuthValidUser().then(response => {
-      console.log('data: ', this.data);
       this.token = response['token'];
       this.userData = response['user'];
     }).catch(error => {
       this.utilitiesService.fnSignOutUser().then(resp => {
         this.utilitiesService.fnNavigateByUrl('auth/login');
       })
+    });
+  }
+
+  fnGetDataLanguages(language, nameComponent) {
+    let urlCollection = 'Languages/' + language + '/' + nameComponent;
+    this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
+      this.DATA_LANG = response;
+      console.log('this.DATA_LANG: ', this.DATA_LANG);
+    });
+  }
+  
+  fnGetDataGeneralLanguages(language) {
+    let urlCollection = 'GeneralLanguages/' + language;
+    this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
+      this.DATA_LANG_GENERAL = response;
+      console.log('this.DATA_LANG_GENERAL: ', this.DATA_LANG_GENERAL);
     });
   }
 
