@@ -12,11 +12,19 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
+      path: 'home',
+      // canActivate: [AuthGuard],
+      component: DashboardComponent,
+    }, {
       path: 'dashboard',
       // canActivate: [AuthGuard],
       component: DashboardComponent,
     }, {
       path: 'state',
+      // canActivate: [AuthGuard],
+      component: StateComponent,
+    }, {
+      path: 'profile',
       // canActivate: [AuthGuard],
       component: StateComponent,
     }, {

@@ -21,6 +21,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/state',
   },
+  {
+    title: 'Perfiles',
+    icon: 'home-outline',
+    link: '/pages/profile',
+  },
   // {
   //   title: 'Auth',
   //   icon: 'lock-outline',

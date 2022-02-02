@@ -71,15 +71,17 @@ export class AddComponent implements OnInit {
   fnAddData(data) {
     console.log('data: ', data.value);
     console.log('state: ', this.state);
-    // this.submitted = true;
+    this.submitted = true;
     this.stateService.fnHttpSetAddNewState(this.token, this.state).subscribe(response => {
       console.log('response: ', response);
       const data = response;
       if (data['status'] == 200) {
-        this.utilitiesService.showToast('top-right', 'success', 'Estado agregado satisfactoriamente!', 'nb-alert');
+        this.submitted = false;
+        this.utilitiesService.showToast('top-right', 'success', this.DATA_LANG['msgLblSaveStatusSuccess']['text'], 'fas fa-check');
         this.dismiss(true);
       } else {
-        this.utilitiesService.showToast('top-right', 'danger', 'El estado no se pudo agregar. Intentelo nuevament!', 'nb-alert');
+        this.submitted = false;
+        this.utilitiesService.showToast('top-right', 'danger', this.DATA_LANG['msgLblSaveStatusError']['text'], 'nb-alert');
         this.dismiss(false);
       }
     });

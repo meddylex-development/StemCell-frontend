@@ -24,8 +24,8 @@ export class StateService {
     private utility: UtilitiesService
   ) { }
 
-  fnSetDefineTokenAuthorization(payload) {
-    this.data_headers_request = new HttpHeaders().set('Authorization', payload);
+  fnSetDefineTokenAuthorization(token) {
+    this.data_headers_request = new HttpHeaders().set('Authorization', token);
     return this.data_headers_request;
   }
 

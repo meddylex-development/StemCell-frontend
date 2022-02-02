@@ -119,12 +119,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   fnGetDataAccess() {
     let urlCollection = 'PermissionAreas';
     let urlLogo = 'UrlLogo';
-    this.utilitiesService.fnGetDataFBCallback(urlLogo, (response) => {
-      this.urlLogo = response;
-    });
-    
-    this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
-      let dataAccess = response;
+    // this.utilitiesService.fnGetDataFBCallback(urlLogo, (response) => {
+    //   // this.urlLogo = response;
+    // });
+
+    // this.utilitiesService.fnGetDataFBPromise(urlLogo).then((response) => {
+    //   console.log('response: ', response);
+    // });
+
+    const promise1 = this.utilitiesService.fnGetDataFBPromise(urlLogo);
+    const promise2 = this.utilitiesService.fnGetDataFBPromise(urlCollection);
+
+    Promise.all([promise1, promise2]).then((response) => {
+      console.log('response------: ', response[0]);
+      this.urlLogo = response[0].toString();
+      console.log('this.urlLogo: ', this.urlLogo);
+      let dataAccess = response[1];
+      console.log('dataAccess: ', dataAccess);
       this.accessModDirectionSwitcher = dataAccess['modDirectionSwitcher']['state'];
       this.accessModThemeSelect = dataAccess['modThemeSelect']['state'];
       this.accessIconToggleSidebar = dataAccess['modIconToggleSidebar']['state'];
@@ -133,7 +144,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.accessModEmail = dataAccess['modEmail']['state'];
       this.accessModNotifications = dataAccess['modNotifications']['state'];
       this.accessModPictureProfile = dataAccess['modPictureProfile']['state'];
+    }).catch((error) => {
+      console.log('error: ', error);
     });
+    
+    // this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
+    //   let dataAccess = response;
+    //   this.accessModDirectionSwitcher = dataAccess['modDirectionSwitcher']['state'];
+    //   this.accessModThemeSelect = dataAccess['modThemeSelect']['state'];
+    //   this.accessIconToggleSidebar = dataAccess['modIconToggleSidebar']['state'];
+    //   this.accessLogo = dataAccess['modLogo']['state'];
+    //   this.accessModSearch = dataAccess['modSearch']['state'];
+    //   this.accessModEmail = dataAccess['modEmail']['state'];
+    //   this.accessModNotifications = dataAccess['modNotifications']['state'];
+    //   this.accessModPictureProfile = dataAccess['modPictureProfile']['state'];
+    // });
 
 
   }

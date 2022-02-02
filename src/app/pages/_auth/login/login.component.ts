@@ -45,12 +45,15 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
     @Inject(NB_AUTH_OPTIONS) options: {},
     public cd: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
-    public router: Router) {
+    public router: Router
+    ) {
     super(service, options, cd, router);
   }
 
   ngOnInit() {
     this.language = (this.utilitiesService.fnGetBrowserLocales().length > 1) ? (this.utilitiesService.fnGetBrowserLocales()[1]).toUpperCase() : 'ES';
+    // this.language = 'EN';
+    console.log('this.language: ', this.language);
     this.utilitiesService.fnSetLocalStorage("lang", this.language);
     this.fnGetDataLanguages(this.language, this.nameComponent);
     this.fnGetDataAccess();
@@ -71,46 +74,47 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
   }
 
   login(): void {
-    const self = this;
-    self.errors = [];
-    self.messages = [];
-    self.submitted = true;
-    // self.user['getToken'] = true;
+    this.errors = [];
+    this.messages = [];
+    this.submitted = true;
+    // this.user['getToken'] = true;
 
     const obj_user_account = {
-      'password': self.user['password'],
-      'email': self.user['email'],
+      'password': this.user['password'],
+      'email': this.user['email'],
       // 'rememberMe': true,
       'getToken': true,
     };
 
-    // self.service.authenticate(self.strategy, obj_user_account).subscribe((resultAuth: NbAuthResult) => {
+    // this.service.authenticate(this.strategy, obj_user_account).subscribe((resultAuth: NbAuthResult) => {
     //   if (resultAuth.isSuccess() && resultAuth.getMessages()[0]['status'] === 200) {
-    //     self.messages = resultAuth.getMessages();
-    //     self.token = self.messages[0]['body']['jwt'];
-    //     self.utilitiesService.fnSetToken(self.token);
+    //     this.messages = resultAuth.getMessages();
+    //     this.token = this.messages[0]['body']['jwt'];
+    //     this.utilitiesService.fnSetToken(this.token);
     //   }
     // },(error) => {
     // });
 
-    self.service.authenticate(self.strategy, obj_user_account).subscribe((result: NbAuthResult) => {
+    console.log('obj_user_account: ', obj_user_account);
+    this.service.authenticate(this.strategy, obj_user_account).subscribe((result: NbAuthResult) => {
+      console.log('result: ', result);
       if (result.isSuccess()) {
         if (result['response']['status'] == 200){
           localStorage.setItem('userData', JSON.stringify(result['response']['body']['user']));
           const redirect = result.getRedirect();
-          self.router.navigateByUrl(redirect);
+          this.router.navigateByUrl(redirect);
         }
         if (result['response']['status'] == 206) {
-          self.submitted = false;
+          this.submitted = false;
           this.utilitiesService.showToast('top-right', 'danger', 'Ha ocurrido un error, intentalo nuevamente!');
         }
       } else {
+        this.submitted = false;
         if (result.getErrors()[0]['status'] == 500) {
-          self.submitted = false;
           this.utilitiesService.showToast('top-right', 'danger', 'Ha ocurrido un error, intentalo nuevamente!');
         }
       }
-      self.cd.detectChanges();
+      this.cd.detectChanges();
     });
 
   }

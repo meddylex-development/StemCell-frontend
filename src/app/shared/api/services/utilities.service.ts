@@ -38,7 +38,7 @@ export class UtilitiesService {
   }
 
   fnReturnKey() {
-    if (sessionStorage.getItem('payload')) {
+    if (sessionStorage.getItem('token')) {
       return true;
     } else {
       return false;
@@ -73,8 +73,8 @@ export class UtilitiesService {
     return sessionStorage.getItem('user');
   }
 
-  fnSetToken(payload) {
-    sessionStorage.setItem('payload', payload);
+  fnSetToken(token) {
+    sessionStorage.setItem('token', token);
   }
 
   fnSetSessionStorage(nameVar, dataVal) {
@@ -102,7 +102,7 @@ export class UtilitiesService {
     localStorage.setItem('endDate', endDate);
   }
   fnGetToken = function () {
-    const t = sessionStorage.getItem('payload');
+    const t = sessionStorage.getItem('token');
     if (t) {
       return t;
     } else {
@@ -249,10 +249,10 @@ export class UtilitiesService {
   fnGetCurrentTokenSession(returnObserver) {
     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
-        // here we receive a payload from the token and assigne it to our `user` variable
-        const current_payload = token.getValue();
-        if (current_payload) {
-          returnObserver(current_payload);
+        // here we receive a token from the token and assigne it to our `user` variable
+        const current_token = token.getValue();
+        if (current_token) {
+          returnObserver(current_token);
         } else {
           returnObserver(false);
         }
@@ -307,8 +307,8 @@ export class UtilitiesService {
   //     .catch((e) => this.handleError(e));
   // }
 
-  // fnSetDefineTokenAuthorization(payload) {
-  //   this.data_headers_request = new HttpHeaders().set('Authorization', payload);
+  // fnSetDefineTokenAuthorization(token) {
+  //   this.data_headers_request = new HttpHeaders().set('Authorization', token);
   //   return this.data_headers_request;
   // }
 
@@ -418,14 +418,14 @@ export class UtilitiesService {
     return column;
   }
 
-  fnDecodePayload (token) {
+  fnDecodeToken (token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    const jsonToken = decodeURIComponent(atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 
-    return JSON.parse(jsonPayload);
+    return JSON.parse(jsonToken);
   }
 
   fnHttpGetDataUrlCustom(url_enpoint, guid_user?): Observable<any> {
@@ -452,13 +452,8 @@ export class UtilitiesService {
   }
 
   async fnGetDataFB(url_collection_query) {
-    const self = this;
-    // this.db.object(url_collection_query).valueChanges().subscribe((response) => {
-    //   return response;
-    //   // this.dataFB = response;
-    // });
     return new Promise(function (resolve, reject) {
-      self.db.object(url_collection_query).valueChanges().subscribe((response) => {
+      this.db.object(url_collection_query).valueChanges().subscribe((response) => {
         resolve(response);
         // this.dataFB = response;
       });
@@ -471,6 +466,16 @@ export class UtilitiesService {
     }, (error) => {
       callback(error);
     });
+  }
+
+  fnGetDataFBPromise(url_collection_query) {
+    return new Promise ((resolve, reject) => {
+      this.db.object(url_collection_query).valueChanges().subscribe((response) => {
+        resolve(response);
+      }, (error) => {
+        reject(error);
+      });
+    })
   }
 
   fnGetBrowserLocales(options = {}) {

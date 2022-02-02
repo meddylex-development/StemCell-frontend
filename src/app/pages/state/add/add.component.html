@@ -10,7 +10,7 @@
             <form (ngSubmit)="fnAddData(addStateForm)" style="width: 350px;" #addStateForm="ngForm" aria-labelledby="title">
               <div class="col-12 pl-0 pr-0">
                 <div class="form-group">
-                  <label for="input-stateName">{{ DATA_LANG?.mdlLblAddStatusName?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="Campo obligatorio">*</span></label>                                         
+                  <label for="input-stateName">{{ DATA_LANG?.mdlLblAddStatusName?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>                                         
                   <input 
                     nbInput 
                     fullWidth 
@@ -23,13 +23,13 @@
                     autofocus 
                     type="text"
                     class="form-control"
-                    placeholder="Ingrese nombre estado"
+                    placeholder="{{ DATA_LANG?.phlInputdAddStatus?.text }}"
                     style="height: 45px;">
                 </div>
               </div>
               <div class="col-12 pl-0 pr-0">
                 <div class="form-group">
-                  <label for="input-stateDescription">{{ DATA_LANG?.mdlLblAddStatusDescription?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="Campo obligatorio">*</span></label>                                         
+                  <label for="input-stateDescription">{{ DATA_LANG?.mdlLblAddStatusDescription?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>                                         
                   <!-- <input 
                     nbInput 
                     fullWidth 
@@ -50,7 +50,7 @@
                         id="input-stateDescription" 
                         nbInput 
                         fullWidth 
-                        placeholder="Ingrese una descripción del estado">
+                        placeholder="{{ DATA_LANG?.phlInputdAddStatusDesc?.text }}">
                     </textarea>
                 </div>
               </div>
@@ -61,7 +61,7 @@
                   type="submit"
                   [class.btn-pulse]="submitted"
                   style="background-color: #3366ff; border-color: #3366ff; color: white;">
-                  Guardar
+                  {{ DATA_LANG_GENERAL?.lblButtonSave?.text }}
               </button>
               &nbsp;&nbsp;&nbsp;
               <button 
@@ -70,7 +70,7 @@
                   status="info" 
                   style="background-color: gray; border-color: gray; color: white;"
                   (click)="fnCancelAddData()">
-                  Cancelar
+                  {{ DATA_LANG_GENERAL?.lblButtonCancel?.text }}
               </button>
             </form>
           </div>

@@ -1,6 +1,6 @@
 <nb-card>
     <nb-card-header style="display: flex; justify-content: space-between;">
-        Eliminar estados
+        {{ DATA_LANG?.mdlDeleteAllTitle?.text }}
         <span (click)="fnCloseModal()" nbTooltip="Cerrar">
             <i class="fas fa-times cursor-pointer text-danger"></i>
         </span>
@@ -9,14 +9,14 @@
         <div class="row ml-0 mr-0">
             <form (ngSubmit)="fnDeleteAllData(deleteAllStateForm)" style="width: 350px;" #deleteAllStateForm="ngForm" aria-labelledby="title">
                 <div class="col-12 pl-0 pr-0">
-                    <p>Esta seguro de que desea eliminar todos los registros de la tabla?</p>
+                    <p>{{ DATA_LANG?.mdlLblDeleteAllStatus?.text }}</p>
                 </div>
                 <button 
                     nbButton 
                     fullWidth 
                     type="submit"
                     status="info">
-                    Eliminar
+                    {{ DATA_LANG_GENERAL?.lblButtonDelete?.text }}
                 </button>
                 &nbsp;&nbsp;&nbsp;
                 <button 
@@ -25,7 +25,7 @@
                     status="info" 
                     style="background-color: gray; border-color: gray; color: white;"
                     (click)="fnCancelDeleteAllData()">
-                    Cancelar
+                    {{ DATA_LANG_GENERAL?.lblButtonCancel?.text }}
                 </button>
             </form> 
         </div>

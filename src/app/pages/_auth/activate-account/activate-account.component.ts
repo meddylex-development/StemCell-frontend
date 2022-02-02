@@ -61,7 +61,7 @@ export class ActivateAccountComponent extends NbResetPasswordComponent implement
   }
 
   // fnGetEmail(token) {
-  //   let object_decode_token = this.utilitiesService.fnDecodePayload(token);
+  //   let object_decode_token = this.utilitiesService.fnDecodeToken(token);
   //   if (object_decode_token['email'] != '') {
   //     // this.email = object_decode_token['email'];
   //   } else {

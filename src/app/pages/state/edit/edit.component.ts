@@ -21,6 +21,11 @@ export class EditComponent implements OnInit {
   public userData: any = null; 
   public submitted: boolean = false;
   public state: any = {};
+
+  public DATA_LANG: any = null;
+  public DATA_LANG_GENERAL: any = null;
+  public language: string = '';
+  public nameComponent: string = 'stateComponent';
   
   constructor(
     protected ref: NbDialogRef<EditComponent>,
@@ -31,6 +36,11 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.language = (this.utilitiesService.fnGetBrowserLocales().length > 1) ? (this.utilitiesService.fnGetBrowserLocales()[1]).toUpperCase() : 'ES';
+    // this.language = 'EN';
+    this.utilitiesService.fnSetLocalStorage("lang", this.language);
+    this.fnGetDataLanguages(this.language, this.nameComponent);
+    this.fnGetDataGeneralLanguages(this.language);
     this.utilitiesService.fnAuthValidUser().then(response => {
       console.log('data: ', this.data);
       this.token = response['token'];
@@ -43,6 +53,22 @@ export class EditComponent implements OnInit {
     });
   }
 
+  fnGetDataLanguages(language, nameComponent) {
+    let urlCollection = 'Languages/' + language + '/' + nameComponent;
+    this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
+      this.DATA_LANG = response;
+      console.log('this.DATA_LANG: ', this.DATA_LANG);
+    });
+  }
+  
+  fnGetDataGeneralLanguages(language) {
+    let urlCollection = 'GeneralLanguages/' + language;
+    this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
+      this.DATA_LANG_GENERAL = response;
+      console.log('this.DATA_LANG_GENERAL: ', this.DATA_LANG_GENERAL);
+    });
+  }
+
   fnEditData(data) {
     console.log('data: ', data.value);
     console.log('state: ', this.state);
@@ -51,10 +77,10 @@ export class EditComponent implements OnInit {
       console.log('response: ', response);
       const data = response;
       if (data['status'] == 200) {
-        this.utilitiesService.showToast('top-right', 'success', 'Estado actualizado satisfactoriamente!', 'nb-alert');
+        this.utilitiesService.showToast('top-right', 'success', this.DATA_LANG['msgLblUpdateStatusSuccess']['text'], 'nb-alert');
         this.dismiss(true);
       } else {
-        this.utilitiesService.showToast('top-right', 'danger', 'El estado no se pudo actualizar. Intentelo nuevamente!', 'nb-alert');
+        this.utilitiesService.showToast('top-right', 'danger', this.DATA_LANG['msgLblDeleteStatusError']['text'], 'nb-alert');
         this.dismiss(false);
       }
     });

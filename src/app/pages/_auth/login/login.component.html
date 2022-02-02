@@ -85,7 +85,7 @@
           fullWidth
           status="primary"
           size="large"
-          [disabled]="submitted || !form.valid"
+          [disabled]="submitted"
           [class.btn-pulse]="submitted">
     {{ DATA_LANG?.lblBtnLogin?.text || 'Loading...' }}
   </button>
