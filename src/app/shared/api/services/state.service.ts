@@ -18,6 +18,8 @@ export class StateService {
   urlSetEditState: string = '';
   urlSetDeleteState: string = '';
   urlSetDeleteAllState: string = '';
+  urlGetStateListByName: string = '';
+  urlGetStateListById: string = '';
 
   constructor(
     public http: HttpClient, 
@@ -40,11 +42,31 @@ export class StateService {
       });
   }
 
+  fnHttpGetStateListByName(token: string, name_state: any): Observable<any> {
+    const headers = this.fnSetDefineTokenAuthorization(token);
+    this.urlGetStateListByName = '/api/state/list/' + name_state;
+    return this.http.post(this.utility.fnGetHost() + this.urlGetStateListByName, name_state, 
+    {
+      observe: 'response',
+      headers: headers,
+      reportProgress: true,
+    });
+  }
+
+  fnHttpGetStateListById(token: string, state_id: any): Observable<any> {
+    const headers = this.fnSetDefineTokenAuthorization(token);
+    this.urlGetStateListById = '/api/state-by-id/' + state_id;
+    return this.http.post(this.utility.fnGetHost() + this.urlGetStateListById, state_id, 
+    {
+      observe: 'response',
+      headers: headers,
+      reportProgress: true,
+    });
+  }
+
   fnHttpSetAddNewState(token: string, dataObject: any): Observable<any> {
-    console.log('dataObject: ', dataObject);
     const headers = this.fnSetDefineTokenAuthorization(token);
     this.urlSetAddNewState = '/api/state/add';
-    console.log('URL: ', this.utility.fnGetHost() + this.urlSetAddNewState);
     return this.http.post(this.utility.fnGetHost() + this.urlSetAddNewState, dataObject, 
     {
       observe: 'response',
@@ -55,7 +77,6 @@ export class StateService {
 
   fnHttpSetEditState(token: string, dataObject: any, id:any): Observable<any> {
     // this.urlSetEditState = 'estado/editarEstado/' + id ;
-    console.log('dataObject: ', dataObject);
     const headers = this.fnSetDefineTokenAuthorization(token);
     this.urlSetEditState = `/api/state/${id}`;
     return this.http.put(this.utility.fnGetHost() + this.urlSetEditState, dataObject, 

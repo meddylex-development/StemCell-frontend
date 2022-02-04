@@ -1,13 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { 
-  NbToastrService, 
-  NbDialogService, 
-} from '@nebular/theme';
-import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 
 import { UtilitiesService } from 'app/shared/api/services/utilities.service';
-import { StateService } from 'app/shared/api/services/state.service';
+import { ProfileService } from 'app/shared/api/services/profile.service';
 
 @Component({
   selector: 'delete',
@@ -20,19 +15,17 @@ export class DeleteComponent implements OnInit {
   public token: string = '';
   public userData: any = null; 
   public submitted: boolean = false;
-  public state: any = {};
+  public profile: any = {};
 
   public DATA_LANG: any = null;
   public DATA_LANG_GENERAL: any = null;
   public language: string = '';
-  public nameComponent: string = 'stateComponent';
+  public nameComponent: string = 'profileComponent';
   
   constructor(
     protected ref: NbDialogRef<DeleteComponent>,
-    private dialogService: NbDialogService,
-    private authService: NbAuthService,
     private utilitiesService: UtilitiesService,
-    private stateService: StateService,
+    private profileService: ProfileService,
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +37,7 @@ export class DeleteComponent implements OnInit {
     this.utilitiesService.fnAuthValidUser().then(response => {
       this.token = response['token'];
       this.userData = response['user'];
-      this.state = JSON.parse(JSON.stringify(this.data));
+      this.profile = JSON.parse(JSON.stringify(this.data));
     }).catch(error => {
       this.utilitiesService.fnSignOutUser().then(resp => {
         this.utilitiesService.fnNavigateByUrl('auth/login');
@@ -68,7 +61,7 @@ export class DeleteComponent implements OnInit {
 
   fnDeleteData(data) {
     this.submitted = true;
-    this.stateService.fnHttpSetDeleteState(this.token, this.state['_id']).subscribe(response => {
+    this.profileService.fnHttpSetDeleteProfile(this.token, this.profile['_id']).subscribe(response => {
       const data = response;
       if (data['status'] == 200) {
         this.submitted = false;

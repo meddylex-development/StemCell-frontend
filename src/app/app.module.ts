@@ -59,7 +59,7 @@ import { HelpComponent } from './shared/components/modals/help/help.component';
 /* ************* END - Import modules - base component and routing ************* */
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 export function setReturnDataMessages(module: string, res: HttpResponse<Object>): Object[] { return [res]; }
 export function setReturnDataErrors(module: string, res: HttpErrorResponse): Object[] { return [res]; }
@@ -77,6 +77,7 @@ const formSetting: any = {
   imports: [
     FormsModule,
     BrowserModule,
+    NgSelectModule,
     NbActionsModule,
     NbTooltipModule, 
     NbButtonModule,

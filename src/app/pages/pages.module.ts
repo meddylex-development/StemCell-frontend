@@ -7,7 +7,8 @@ import {
   NbButtonModule,
   NbInputModule,
 } from '@nebular/theme';
-import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -15,6 +16,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 
 import { StateModule } from './state/state.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   imports: [
@@ -27,8 +29,10 @@ import { StateModule } from './state/state.module';
     NbInputModule,
     NbCardModule,
     NbTooltipModule,
+    NgSelectModule,
     DashboardModule,
     StateModule,
+    ProfileModule,
   ],
   declarations: [
     PagesComponent,

@@ -8,4 +8,12 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+
+    ::ng-deep .cursor-pointer {
+        cursor: pointer;
+    }
+    
+    .cursor-pointer {
+        cursor: pointer;
+    }
 }

@@ -6,6 +6,7 @@ import { AuthGuard } from 'app/shared/api/services/auth-guard.service';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StateComponent } from './state/state.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [{
   path: '',
@@ -26,7 +27,7 @@ const routes: Routes = [{
     }, {
       path: 'profile',
       // canActivate: [AuthGuard],
-      component: StateComponent,
+      component: ProfileComponent,
     }, {
       path: '',
       redirectTo: 'dashboard',

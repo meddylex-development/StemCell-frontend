@@ -29,18 +29,7 @@
             </div>
             <div class="col-12 pl-0 pr-0">
               <div class="form-group">
-                <label for="input-stateDescription">{{ DATA_LANG?.mdlLblAddStatusDescription?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>                                         
-                <!-- <input 
-                  nbInput 
-                  fullWidth 
-                  [required]="true"
-                  name="profileName" 
-                  id="input-profileName" 
-                  autofocus  
-                  type="text"
-                  class="form-control"
-                  placeholder="Ingrese nombre estado"
-                  style="height: 45px;"> -->
+                <label for="input-stateDescription">{{ DATA_LANG?.mdlLblAddStatusDescription?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>
                   <textarea 
                       #stateDescription="ngModel"
                       [(ngModel)]="state.description"

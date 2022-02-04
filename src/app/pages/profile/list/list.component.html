@@ -1,4 +1,5 @@
 <nb-card class="content-card" [size]="'large'">
+    <!-- <nb-card-header>Google Maps</nb-card-header> -->
     <nb-card-body>
         <h3>
             {{ DATA_LANG?.lblTitle?.text }}
@@ -48,6 +49,15 @@
                         </span>
                     </th>
                     <th>
+                        {{ DATA_LANG?.lblColState?.text }}&nbsp;
+                        <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp(DATA_LANG?.nameModule.text, 'state', DATA_LANG?.mdlHelpTableColState.text, DATA_LANG?.mdlHelpTableColStatusDescription.text)">
+                            <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
+                        </span>
+                        <span nbTooltip="{{ (typeSort[1]['state'] == 'DEFAULT') ? DATA_LANG_GENERAL?.lblHelpTooltipTableSortDefault.text : (typeSort[1]['state'] == 'DESC') ? DATA_LANG_GENERAL?.lblHelpTooltipTableSortDesc.text : DATA_LANG_GENERAL?.lblHelpTooltipTableSortAsc.text }}" class="float-right" (click)="fnOrderList('state', collectionData, typeSort, 2)">
+                            <i class="fas cursor-pointer text-end" [ngClass]="{'fa-sort': typeSort[1]['state'] == 'DEFAULT', 'fa-sort-up': typeSort[1]['state'] == 'ASC', 'fa-sort-down': typeSort[1]['state'] == 'DESC'}"></i>
+                        </span>
+                    </th>
+                    <th>
                         {{ DATA_LANG?.lblColDateCreated?.text }}&nbsp;
                         <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp(DATA_LANG?.nameModule.text, 'dateCreated', DATA_LANG?.mdlHelpTableColDateCreated.text, DATA_LANG?.mdlHelpTableColDateCreatedDescription.text)">
                             <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>
@@ -81,6 +91,7 @@
                 <tr *ngFor="let item of collectionData | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index;">
                     <td>{{ item?.name | titlecase }}</td>
                     <td>{{ item?.description }}</td>
+                    <td>{{ item?.stateName }}</td>
                     <td>{{ item?.dateCreated | date:"medium" }}</td>
                     <td>{{ item?.dateUpdated | date:"medium" }}</td>
                     <td>

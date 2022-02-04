@@ -9,10 +9,11 @@ import { AddComponent } from '../add/add.component';
 import { DeleteAllComponent } from '../delete-all/delete-all.component';
 import { DeleteComponent } from '../delete/delete.component';
 import { EditComponent } from '../edit/edit.component';
+import { ProfileService } from 'app/shared/api/services/profile.service';
 import { StateService } from 'app/shared/api/services/state.service';
 
 @Component({
-  selector: 'list-state',
+  selector: 'list-profile',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
@@ -45,18 +46,20 @@ export class ListComponent implements OnInit {
   public typeSort: any = [
     { id:1, state: 'DEFAULT', column: 'name' },
     { id:2, state: 'DEFAULT', column: 'description' },
-    { id:3, state: 'DEFAULT', column: 'dateCreated' },
-    { id:4, state: 'DEFAULT', column: 'dateUpdated' },
+    { id:3, state: 'DEFAULT', column: 'state' },
+    { id:4, state: 'DEFAULT', column: 'dateCreated' },
+    { id:5, state: 'DEFAULT', column: 'dateUpdated' },
   ];
 
   public DATA_LANG: any = null;
   public DATA_LANG_GENERAL: any = null;
   public language: string = '';
-  public nameComponent: string = 'stateComponent';
+  public nameComponent: string = 'profileComponent';
 
   constructor(
     private dialogService: NbDialogService,
     private utilitiesService: UtilitiesService,
+    private profileService: ProfileService,
     private stateService: StateService,
   ) { }
 
@@ -71,10 +74,7 @@ export class ListComponent implements OnInit {
     this.utilitiesService.fnAuthValidUser().then(response => {
       this.token = response['token'];
       this.userData = response['user'];
-
-      this.fnGetList(this.token);
-      
-
+      this.fnBuildDataPromises(this.token);
     }).catch(error => {
       this.utilitiesService.fnSignOutUser().then(resp => {
         this.utilitiesService.fnNavigateByUrl('auth/login');
@@ -96,16 +96,53 @@ export class ListComponent implements OnInit {
     });
   }
 
-  fnGetList(token) {
-    this.stateService.fnHttpGetStateList(token).subscribe(response => {
-      const data = response['body']['state'];
-      if (data.length > 0) {
-        this.collectionOriginalData = JSON.parse(JSON.stringify(data));
-        this.collectionData = JSON.parse(JSON.stringify(data));
+  fnBuildDataPromises(token) {
+    this.fnGetList(token).then((response) => {
+      if (response) {
+        const data = response['body']['profile'];
+        let collectionData = JSON.parse(JSON.stringify(data));
+        collectionData.forEach((value, key) => {
+          let idState = value['idState'];
+          if (idState) {
+            this.fnGetStates(token, idState).then((responseState) => {
+              if (responseState) {
+                value['stateName'] = responseState['body']['state'][0]['name'];
+              }
+            });
+          }
+        });
+        this.collectionData = collectionData;
+        this.collectionOriginalData = collectionData;
       } else {
         this.collectionOriginalData = [];
         this.collectionData = [];
       }
+    })
+  }
+
+  fnGetList(token) {
+    return new Promise((resolve, reject) => {
+      this.profileService.fnHttpGetProfileList(token).subscribe(response => {
+        const data = response['body']['profile'];
+        if (data.length > 0) {
+          resolve(response);
+        } else {
+          reject(false);
+        }
+      });
+    });
+  }
+
+  fnGetStates(token, idState) {
+    return new Promise((resolve, reject) => {
+      this.stateService.fnHttpGetStateListById(token, idState).subscribe(response => {
+        const data = response['body']['state'];
+        if (data.length > 0) {
+          resolve(response);
+        } else {
+          reject(false);
+        }
+      });
     });
   }
 
@@ -113,7 +150,7 @@ export class ListComponent implements OnInit {
     let dataSend = {};
     dataSend['data'] = data;
     this.dialogService.open(AddComponent, { context: dataSend }).onClose.subscribe((res) => {
-      this.fnGetList(this.token);
+      this.fnBuildDataPromises(this.token);
     });
   }
 
@@ -121,7 +158,7 @@ export class ListComponent implements OnInit {
     let dataSend = {};
     dataSend['data'] = data;
     this.dialogService.open(EditComponent, { context: dataSend }).onClose.subscribe((res) => {
-      this.fnGetList(this.token);
+      this.fnBuildDataPromises(this.token);
     });
   }
 
@@ -129,7 +166,7 @@ export class ListComponent implements OnInit {
     let dataSend = {};
     dataSend['data'] = data;
     this.dialogService.open(DeleteComponent, { context: dataSend }).onClose.subscribe((res) => {
-      this.fnGetList(this.token);
+      this.fnBuildDataPromises(this.token);
     });
   }
 
@@ -137,7 +174,7 @@ export class ListComponent implements OnInit {
     let dataSend = {};
     dataSend['data'] = data;
     this.dialogService.open(DeleteAllComponent, { context: dataSend }).onClose.subscribe((res) => {
-      this.fnGetList(this.token);
+      this.fnBuildDataPromises(this.token);
     });
   }
 

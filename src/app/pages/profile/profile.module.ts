@@ -7,11 +7,12 @@ import {
   NbInputModule,
 } from '@nebular/theme';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 
-import { StateComponent } from './state.component';
+import { ProfileComponent } from './profile.component';
 import { ListComponent } from './list/list.component';
 import { AddComponent } from './add/add.component';
 import { EditComponent } from './edit/edit.component';
@@ -28,9 +29,10 @@ import { DeleteAllComponent } from './delete-all/delete-all.component';
     NgxPaginationModule,
     NbButtonModule,
     NbInputModule,
+    NgSelectModule,
   ],
   declarations: [
-    StateComponent,
+    ProfileComponent,
     ListComponent,
     AddComponent,
     EditComponent,
@@ -38,5 +40,5 @@ import { DeleteAllComponent } from './delete-all/delete-all.component';
     DeleteAllComponent,
   ],
 })
-export class StateModule { }
+export class ProfileModule { }
 

@@ -1,10 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { 
-  NbToastrService, 
-  NbDialogService, 
-} from '@nebular/theme';
-import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 
 import { UtilitiesService } from 'app/shared/api/services/utilities.service';
 import { StateService } from 'app/shared/api/services/state.service';
@@ -29,8 +24,6 @@ export class AddComponent implements OnInit {
   
   constructor(
     protected ref: NbDialogRef<AddComponent>,
-    private dialogService: NbDialogService,
-    private authService: NbAuthService,
     private utilitiesService: UtilitiesService,
     private stateService: StateService,
   ) { }
@@ -56,7 +49,6 @@ export class AddComponent implements OnInit {
     let urlCollection = 'Languages/' + language + '/' + nameComponent;
     this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
       this.DATA_LANG = response;
-      console.log('this.DATA_LANG: ', this.DATA_LANG);
     });
   }
   
@@ -64,16 +56,12 @@ export class AddComponent implements OnInit {
     let urlCollection = 'GeneralLanguages/' + language;
     this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
       this.DATA_LANG_GENERAL = response;
-      console.log('this.DATA_LANG_GENERAL: ', this.DATA_LANG_GENERAL);
     });
   }
 
   fnAddData(data) {
-    console.log('data: ', data.value);
-    console.log('state: ', this.state);
     this.submitted = true;
     this.stateService.fnHttpSetAddNewState(this.token, this.state).subscribe(response => {
-      console.log('response: ', response);
       const data = response;
       if (data['status'] == 200) {
         this.submitted = false;
@@ -92,7 +80,6 @@ export class AddComponent implements OnInit {
   }
 
   fnCancelAddData() {
-    // this.submitted = false;
     this.dismiss();
   }
 
