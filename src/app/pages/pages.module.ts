@@ -17,6 +17,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 
 import { StateModule } from './state/state.module';
 import { ProfileModule } from './profile/profile.module';
+import { DocumentTypeModule } from './document-type/document-type.module';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { ProfileModule } from './profile/profile.module';
     DashboardModule,
     StateModule,
     ProfileModule,
+    DocumentTypeModule,
   ],
   declarations: [
     PagesComponent,

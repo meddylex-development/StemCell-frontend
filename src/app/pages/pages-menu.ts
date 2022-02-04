@@ -26,6 +26,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/profile',
   },
+  {
+    title: 'Tipos de documento',
+    icon: 'home-outline',
+    link: '/pages/document-type',
+  },
   // {
   //   title: 'Auth',
   //   icon: 'lock-outline',
