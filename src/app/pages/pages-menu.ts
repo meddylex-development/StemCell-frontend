@@ -31,6 +31,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/document-type',
   },
+  {
+    title: 'Paises',
+    icon: 'home-outline',
+    link: '/pages/country',
+  },
   // {
   //   title: 'Auth',
   //   icon: 'lock-outline',
