@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 import { UtilitiesService } from 'app/shared/api/services/utilities.service';
-import { ProfileService } from 'app/shared/api/services/profile.service';
+import { DocumentTypeService } from 'app/shared/api/services/document-type.service';
 import { StateService } from 'app/shared/api/services/state.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class EditComponent implements OnInit {
   public token: string = '';
   public userData: any = null; 
   public submitted: boolean = false;
-  public profile: any = {
+  public documentType: any = {
     'name': '',
     'description': '', 
     'idState': '',
@@ -25,14 +25,14 @@ export class EditComponent implements OnInit {
   public DATA_LANG: any = null;
   public DATA_LANG_GENERAL: any = null;
   public language: string = '';
-  public nameComponent: string = 'profileComponent';
+  public nameComponent: string = 'documentTypeComponent';
   public collectionStatesList: any = [];
   public collectionStatesListOriginal: any = [];
   
   constructor(
     protected ref: NbDialogRef<EditComponent>,
     private utilitiesService: UtilitiesService,
-    private profileService: ProfileService,
+    private documentTypeService: DocumentTypeService,
     private stateService: StateService,
   ) { }
 
@@ -45,7 +45,7 @@ export class EditComponent implements OnInit {
     this.utilitiesService.fnAuthValidUser().then(response => {
       this.token = response['token'];
       this.userData = response['user'];
-      this.profile = JSON.parse(JSON.stringify(this.data));
+      this.documentType = JSON.parse(JSON.stringify(this.data));
 
       this.fnGetList(this.token).then((responseState) => {
         if(responseState['body']['stateRequest']) {
@@ -56,7 +56,7 @@ export class EditComponent implements OnInit {
           if (idState) {
             this.fnGetStates(this.token, idState).then((response) => {
               if (response) {
-                this.profile['state'] =  response['body']['state'][0];
+                this.documentType['state'] =  response['body']['state'][0];
               }
             });
           }
@@ -114,21 +114,21 @@ export class EditComponent implements OnInit {
     });
   }
 
-  fnSetStatusProfile(data_profile) {
-    this.profile['idState'] = data_profile['_id'];
+  fnSetStatusDocumentType(data_documentType) {
+    this.documentType['idState'] = data_documentType['_id'];
   }
 
   fnEditData(data) {
     this.submitted = true;
-    this.profileService.fnHttpSetEditProfile(this.token, this.profile, this.profile['_id']).subscribe(response => {
+    this.documentTypeService.fnHttpSetEditDocumentType(this.token, this.documentType, this.documentType['_id']).subscribe(response => {
       const data = response;
       if (data['status'] == 200) {
         this.submitted = false;
-        this.utilitiesService.showToast('top-right', 'success', this.DATA_LANG['msgLblUpdateStatusSuccess']['text'], 'nb-alert');
+        this.utilitiesService.showToast('top-right', 'success', this.DATA_LANG['msgLblUpdateSuccess']['text'], 'nb-alert');
         this.dismiss(true);
       } else {
         this.submitted = false;
-        this.utilitiesService.showToast('top-right', 'danger', this.DATA_LANG['msgLblDeleteStatusError']['text'], 'nb-alert');
+        this.utilitiesService.showToast('top-right', 'danger', this.DATA_LANG['msgLblDeleteError']['text'], 'nb-alert');
         this.dismiss(false);
       }
     });

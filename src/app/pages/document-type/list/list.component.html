@@ -39,7 +39,7 @@
                             <i class="fas cursor-pointer text-end" [ngClass]="{'fa-sort': typeSort[0]['state'] == 'DEFAULT', 'fa-sort-up': typeSort[0]['state'] == 'ASC', 'fa-sort-down': typeSort[0]['state'] == 'DESC'}"></i>
                         </span>
                     </th>
-                    <th>
+                    <th style="width: 30% !important;">
                         {{ DATA_LANG?.lblColDescription?.text }}&nbsp;
                         <span nbTooltip="{{ DATA_LANG_GENERAL?.lblHelpTooltip?.text }}" (click)="showModalHelp(DATA_LANG?.nameModule.text, 'description', DATA_LANG?.mdlHelpTableColDescription.text, DATA_LANG?.mdlHelpTableColDescriptionDescription.text)">
                             <i class="far fa-question-circle cursor-pointer text-end text-primary"></i>

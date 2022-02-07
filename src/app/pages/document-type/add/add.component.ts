@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { UtilitiesService } from 'app/shared/api/services/utilities.service';
-import { ProfileService } from 'app/shared/api/services/profile.service';
 import { StateService } from 'app/shared/api/services/state.service';
+import { DocumentTypeService } from 'app/shared/api/services/document-type.service';
 
 @Component({
   selector: 'add',
@@ -15,7 +15,7 @@ export class AddComponent implements OnInit {
   public token: string = '';
   public userData: any = null; 
   public submitted: boolean = false;
-  public profile: any = {
+  public documentType: any = {
     'name': '',
     'description': '', 
     'idState': '',
@@ -24,14 +24,14 @@ export class AddComponent implements OnInit {
   public DATA_LANG: any = null;
   public DATA_LANG_GENERAL: any = null;
   public language: string = '';
-  public nameComponent: string = 'profileComponent';
+  public nameComponent: string = 'documentTypeComponent';
   public collectionStatesList: any = [];
   public collectionStatesListOriginal: any = [];
   
   constructor(
     protected ref: NbDialogRef<AddComponent>,
     private utilitiesService: UtilitiesService,
-    private profileService: ProfileService,
+    private documentTypeService: DocumentTypeService,
     private stateService: StateService,
   ) { }
 
@@ -88,21 +88,21 @@ export class AddComponent implements OnInit {
     });
   }
 
-  fnSetStatusProfile(data_profile) {
-    this.profile['idState'] = data_profile['_id'];
+  fnSetStatusDocumentType(data_documentType) {
+    this.documentType['idState'] = data_documentType['_id'];
   }
 
   fnAddData(data) {
     this.submitted = true;
-    this.profileService.fnHttpSetAddNewProfile(this.token, this.profile).subscribe(response => {
+    this.documentTypeService.fnHttpSetAddNewDocumentType(this.token, this.documentType).subscribe(response => {
       const data = response;
       if (data['status'] == 200) {
         this.submitted = false;
-        this.utilitiesService.showToast('top-right', 'success', this.DATA_LANG['msgLblSaveStatusSuccess']['text'], 'fas fa-check');
+        this.utilitiesService.showToast('top-right', 'success', this.DATA_LANG['msgLblSaveSuccess']['text'], 'fas fa-check');
         this.dismiss(true);
       } else {
         this.submitted = false;
-        this.utilitiesService.showToast('top-right', 'danger', this.DATA_LANG['msgLblSaveStatusError']['text'], 'nb-alert');
+        this.utilitiesService.showToast('top-right', 'danger', this.DATA_LANG['msgLblSaveError']['text'], 'nb-alert');
         this.dismiss(false);
       }
     });

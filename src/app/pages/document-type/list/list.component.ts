@@ -9,7 +9,7 @@ import { AddComponent } from '../add/add.component';
 import { DeleteAllComponent } from '../delete-all/delete-all.component';
 import { DeleteComponent } from '../delete/delete.component';
 import { EditComponent } from '../edit/edit.component';
-import { ProfileService } from 'app/shared/api/services/profile.service';
+import { DocumentTypeService } from 'app/shared/api/services/document-type.service';
 import { StateService } from 'app/shared/api/services/state.service';
 
 @Component({
@@ -59,7 +59,7 @@ export class ListComponent implements OnInit {
   constructor(
     private dialogService: NbDialogService,
     private utilitiesService: UtilitiesService,
-    private profileService: ProfileService,
+    private documentTypeService: DocumentTypeService,
     private stateService: StateService,
   ) { }
 
@@ -99,7 +99,7 @@ export class ListComponent implements OnInit {
   fnBuildDataPromises(token) {
     this.fnGetList(token).then((response) => {
       if (response) {
-        const data = response['body']['profile'];
+        const data = response['body']['data'];
         let collectionData = JSON.parse(JSON.stringify(data));
         collectionData.forEach((value, key) => {
           let idState = value['idState'];
@@ -122,8 +122,8 @@ export class ListComponent implements OnInit {
 
   fnGetList(token) {
     return new Promise((resolve, reject) => {
-      this.profileService.fnHttpGetProfileList(token).subscribe(response => {
-        const data = response['body']['profile'];
+      this.documentTypeService.fnHttpGetDocumentTypeList(token).subscribe(response => {
+        const data = response['body']['data'];
         if (data.length > 0) {
           resolve(response);
         } else {
