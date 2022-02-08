@@ -19,6 +19,7 @@ import { StateModule } from './state/state.module';
 import { ProfileModule } from './profile/profile.module';
 import { DocumentTypeModule } from './document-type/document-type.module';
 import { CountryModule } from './country/country.module';
+import { CityModule } from './city/city.module';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { CountryModule } from './country/country.module';
     ProfileModule,
     DocumentTypeModule,
     CountryModule,
+    CityModule,
   ],
   declarations: [
     PagesComponent,

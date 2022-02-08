@@ -18,6 +18,7 @@ export class CountryService {
   urlSetEditCountry: string = '';
   urlSetDeleteCountry: string = '';
   urlSetDeleteAllCountry: string = '';
+  urlGetCountryListById: string = '';
 
   constructor(
     public http: HttpClient, 
@@ -38,6 +39,17 @@ export class CountryService {
         headers: headers,
         reportProgress: true,
       });
+  }
+
+  fnHttpGetCountryListById(token: string, id: any): Observable<any> {
+    const headers = this.fnSetDefineTokenAuthorization(token);
+    this.urlGetCountryListById = '/api/country-by-id/' + id;
+    return this.http.post(this.utility.fnGetHost() + this.urlGetCountryListById, id, 
+    {
+      observe: 'response',
+      headers: headers,
+      reportProgress: true,
+    });
   }
 
   fnHttpSetAddNewCountry(token: string, dataObject: any): Observable<any> {

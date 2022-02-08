@@ -9,6 +9,7 @@ import { StateComponent } from './state/state.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DocumentTypeComponent } from './document-type/document-type.component';
 import { CountryComponent } from './country/country.component';
+import { CityComponent } from './city/city.component';
 
 const routes: Routes = [{
   path: '',
@@ -38,6 +39,10 @@ const routes: Routes = [{
       path: 'country',
       // canActivate: [AuthGuard],
       component: CountryComponent,
+    }, {
+      path: 'city',
+      // canActivate: [AuthGuard],
+      component: CityComponent,
     }, {
       path: '',
       redirectTo: 'dashboard',
