@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 import { UtilitiesService } from 'app/shared/api/services/utilities.service';
-import { CountryService } from 'app/shared/api/services/country.service';
+import { CityService } from 'app/shared/api/services/city.service';
 
 @Component({
   selector: 'delete',
@@ -15,17 +15,17 @@ export class DeleteComponent implements OnInit {
   public token: string = '';
   public userData: any = null; 
   public submitted: boolean = false;
-  public country: any = {};
+  public city: any = {};
 
   public DATA_LANG: any = null;
   public DATA_LANG_GENERAL: any = null;
   public language: string = '';
-  public nameComponent: string = 'countryComponent';
+  public nameComponent: string = 'cityComponent';
   
   constructor(
     protected ref: NbDialogRef<DeleteComponent>,
     private utilitiesService: UtilitiesService,
-    private countryService: CountryService,
+    private cityService: CityService,
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class DeleteComponent implements OnInit {
     this.utilitiesService.fnAuthValidUser().then(response => {
       this.token = response['token'];
       this.userData = response['user'];
-      this.country = JSON.parse(JSON.stringify(this.data));
+      this.city = JSON.parse(JSON.stringify(this.data));
     }).catch(error => {
       this.utilitiesService.fnSignOutUser().then(resp => {
         this.utilitiesService.fnNavigateByUrl('auth/login');
@@ -61,7 +61,7 @@ export class DeleteComponent implements OnInit {
 
   fnDeleteData(data) {
     this.submitted = true;
-    this.countryService.fnHttpSetDeleteCountry(this.token, this.country['_id']).subscribe(response => {
+    this.cityService.fnHttpSetDeleteCity(this.token, this.city['_id']).subscribe(response => {
       const data = response;
       if (data['status'] == 200) {
         this.submitted = false;

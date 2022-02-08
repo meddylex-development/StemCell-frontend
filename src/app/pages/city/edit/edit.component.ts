@@ -2,8 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 import { UtilitiesService } from 'app/shared/api/services/utilities.service';
-import { CountryService } from 'app/shared/api/services/country.service';
+import { CityService } from 'app/shared/api/services/city.service';
 import { StateService } from 'app/shared/api/services/state.service';
+import { CountryService } from 'app/shared/api/services/country.service';
 
 @Component({
   selector: 'edit',
@@ -16,7 +17,7 @@ export class EditComponent implements OnInit {
   public token: string = '';
   public userData: any = null; 
   public submitted: boolean = false;
-  public country: any = {
+  public city: any = {
     'name': '',
     'description': '', 
     'idState': '',
@@ -25,15 +26,18 @@ export class EditComponent implements OnInit {
   public DATA_LANG: any = null;
   public DATA_LANG_GENERAL: any = null;
   public language: string = '';
-  public nameComponent: string = 'countryComponent';
+  public nameComponent: string = 'cityComponent';
   public collectionStatesList: any = [];
   public collectionStatesListOriginal: any = [];
+  public collectioncountryList: any = [];
+  public collectioncountryListOriginal: any = [];
   
   constructor(
     protected ref: NbDialogRef<EditComponent>,
     private utilitiesService: UtilitiesService,
+    private cityService: CityService,
+    private stateService: StateService, 
     private countryService: CountryService,
-    private stateService: StateService,
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +49,7 @@ export class EditComponent implements OnInit {
     this.utilitiesService.fnAuthValidUser().then(response => {
       this.token = response['token'];
       this.userData = response['user'];
-      this.country = JSON.parse(JSON.stringify(this.data));
+      this.city = JSON.parse(JSON.stringify(this.data));
 
       this.fnGetList(this.token).then((responseState) => {
         if(responseState['body']['stateRequest']) {
@@ -56,7 +60,7 @@ export class EditComponent implements OnInit {
           if (idState) {
             this.fnGetStates(this.token, idState).then((response) => {
               if (response) {
-                this.country['state'] =  response['body']['state'][0];
+                this.city['state'] =  response['body']['state'][0];
               }
             });
           }
@@ -66,6 +70,29 @@ export class EditComponent implements OnInit {
           this.collectionStatesListOriginal = [];
         }
       });
+
+      this.fnGetCountries(this.token).then((response) => {
+        console.log('response: ', response);
+        if(response['body']['stateRequest']) {
+          this.collectioncountryList = response['body']['data'];
+          this.collectioncountryListOriginal = response['body']['data'];
+
+          let idCountry = this.data['idCountry'];
+          if (idCountry) {
+            this.fnGetCountryById(this.token, idCountry).then((response) => {
+              if (response) {
+                console.log('response: ', response);
+                this.city['country'] =  response['body']['data'][0];
+                console.log('this.city["country"]: ', this.city['country']);
+              }
+            });
+          }
+
+        } else {
+          this.collectioncountryList = []
+          this.collectioncountryListOriginal = [];
+        }
+      })
 
     }).catch(error => {
       this.utilitiesService.fnSignOutUser().then(resp => {
@@ -101,6 +128,19 @@ export class EditComponent implements OnInit {
     });
   }
 
+  fnGetCountryById(token, idCountry) {
+    return new Promise((resolve, reject) => {
+      this.countryService.fnHttpGetCountryListById(token, idCountry).subscribe(response => {
+        const data = response['body']['data'];
+        if (data.length > 0) {
+          resolve(response);
+        } else {
+          reject(false);
+        }
+      });
+    });
+  }
+
   fnGetList(token) {
     return new Promise((resolve, reject) => {
       this.stateService.fnHttpGetStateList(token).subscribe(response => {
@@ -114,13 +154,31 @@ export class EditComponent implements OnInit {
     });
   }
 
-  fnSetStatusCountry(data_country) {
-    this.country['idState'] = data_country['_id'];
+  
+  fnGetCountries(token) {
+    return new Promise((resolve, reject) => {
+      this.countryService.fnHttpGetCountryList(token).subscribe(response => {
+        const data = response['body']['data'];
+        if (data.length > 0) {
+          resolve(response);
+        } else {
+          reject(false);
+        }
+      });
+    });
+  }
+
+  fnSetStatusCity(data_city) {
+    this.city['idState'] = data_city['_id'];
+  }
+
+  fnSetCountry(data_country) {
+    this.city['idCountry'] = data_country['_id'];
   }
 
   fnEditData(data) {
     this.submitted = true;
-    this.countryService.fnHttpSetEditCountry(this.token, this.country, this.country['_id']).subscribe(response => {
+    this.cityService.fnHttpSetEditCity(this.token, this.city, this.city['_id']).subscribe(response => {
       const data = response;
       if (data['status'] == 200) {
         this.submitted = false;

@@ -7,20 +7,20 @@
   </nb-card-header>
   <nb-card-body>
       <div class="row ml-0 mr-0">
-          <form (ngSubmit)="fnAddData(addCountryForm)" style="width: 350px;" #addCountryForm="ngForm" aria-labelledby="title">
+          <form (ngSubmit)="fnAddData(addCityForm)" style="width: 350px;" #addCityForm="ngForm" aria-labelledby="title">
             <div class="col-12 pl-0 pr-0">
               <div class="form-group">
-                <label for="input-countryName">{{ DATA_LANG?.mdlLblAddName?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>                                         
+                <label for="input-cityName">{{ DATA_LANG?.mdlLblAddName?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>                                         
                 <input 
                   nbInput 
                   fullWidth 
-                  #countryName="ngModel"
-                  [(ngModel)]="country.name" 
+                  #cityName="ngModel"
+                  [(ngModel)]="city.name" 
                   [ngModelOptions]="{standalone: true}"
                   [status]="'info'"
                   [required]="true"
-                  name="countryName" 
-                  id="input-countryName" 
+                  name="cityName" 
+                  id="input-cityName" 
                   autofocus 
                   type="text"
                   class="form-control"
@@ -30,17 +30,17 @@
             </div>
             <div class="col-12 pl-0 pr-0">
               <div class="form-group">
-                <label for="select-countryState">{{ DATA_LANG?.mdlLblAddStatusCountry?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>
+                <label for="select-country">{{ DATA_LANG?.lblColCountry?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>
                 <ng-select 
-                  [items]="collectionStatesList" 
-                  bindValue="idState"
+                  [items]="collectioncountryList" 
+                  bindValue="idCountry"
                   bindLabel="name"
-                  id="select-countryState" 
-                  name="countryState" 
-                  #countryState="ngModel"
-                  placeholder="Seleccione el estado" 
-                  [(ngModel)]="country.state" 
-                  (change)="fnSetStatusCountry($event);"
+                  id="select-country" 
+                  name="country" 
+                  #country="ngModel"
+                  placeholder="Seleccione el país" 
+                  [(ngModel)]="city.country" 
+                  (change)="fnSetCountry($event);"
                   required 
                   [disabled]="false" 
                   [clearable]="false">
@@ -49,15 +49,34 @@
             </div>
             <div class="col-12 pl-0 pr-0">
               <div class="form-group">
-                <label for="input-countryDescription">{{ DATA_LANG?.mdlLblAddDescription?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>
+                <label for="select-cityState">{{ DATA_LANG?.mdlLblAddStatusCity?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>
+                <ng-select 
+                  [items]="collectionStatesList" 
+                  bindValue="idState"
+                  bindLabel="name"
+                  id="select-cityState" 
+                  name="cityState" 
+                  #cityState="ngModel"
+                  placeholder="Seleccione el estado" 
+                  [(ngModel)]="city.state" 
+                  (change)="fnSetStatusCity($event);"
+                  required 
+                  [disabled]="false" 
+                  [clearable]="false">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-12 pl-0 pr-0">
+              <div class="form-group">
+                <label for="input-cityDescription">{{ DATA_LANG?.mdlLblAddDescription?.text }}:&nbsp;&nbsp;<span class="text-danger cursor-pointer" nbTooltip="{{ DATA_LANG_GENERAL?.lblObligatoryFieldTooltip?.text }}">*</span></label>
                   <textarea 
-                      #countryDescription="ngModel"
-                      [(ngModel)]="country.description" 
+                      #cityDescription="ngModel"
+                      [(ngModel)]="city.description" 
                       [ngModelOptions]="{standalone: true}"
                       [status]="'info'"
                       class="form-control" 
-                      name="countryDescription" 
-                      id="input-countryDescription" 
+                      name="cityDescription" 
+                      id="input-cityDescription" 
                       nbInput 
                       fullWidth 
                       placeholder="{{ DATA_LANG?.phlInputdAddDesc?.text }}">
