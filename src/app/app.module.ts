@@ -154,15 +154,16 @@ const formSetting: any = {
           },
         }),
       ],
-      forms: {
-        login: formSetting,
-        register: formSetting,
-        requestPassword: formSetting,
-        resetPassword: formSetting,
-        logout: {
-          redirectDelay: 0,
-        },
-      },
+      forms: {},
+      // forms: {
+      //   login: formSetting,
+      //   register: formSetting,
+      //   requestPassword: formSetting,
+      //   resetPassword: formSetting,
+      //   logout: {
+      //     redirectDelay: 0,
+      //   },
+      // },
     }),
     /* ************+* END - Implement module NbPasswordAuthStrategy strategy ************* */
   ],

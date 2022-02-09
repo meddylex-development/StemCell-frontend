@@ -31,7 +31,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     NgxAuthRoutingModule,
     NbTooltipModule,
     TooltipModule.forRoot(),
-    NbAuthModule,
+    // NbAuthModule,
   ],
   declarations: [
     // ... here goes our new components
