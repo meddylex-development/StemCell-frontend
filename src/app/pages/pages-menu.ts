@@ -16,6 +16,31 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/home',
   },
+  {
+    title: 'Estados',
+    icon: 'home-outline',
+    link: '/pages/state',
+  },
+  {
+    title: 'Perfiles',
+    icon: 'home-outline',
+    link: '/pages/profile',
+  },
+  {
+    title: 'Tipos de documento',
+    icon: 'home-outline',
+    link: '/pages/document-type',
+  },
+  {
+    title: 'Paises',
+    icon: 'home-outline',
+    link: '/pages/country',
+  },
+  {
+    title: 'Ciudades',
+    icon: 'home-outline',
+    link: '/pages/city',
+  },
   // {
   //   title: 'Auth',
   //   icon: 'lock-outline',

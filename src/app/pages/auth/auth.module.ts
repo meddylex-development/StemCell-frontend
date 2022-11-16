@@ -37,7 +37,7 @@ import { LogoutComponent } from '../_auth/sign-out/sign-out.component';
     NbTooltipModule,
     TooltipModule.forRoot(),
     NgSelectModule,
-    NbAuthModule,
+    // NbAuthModule,
   ],
   declarations: [
     NgxLoginComponent, // <---

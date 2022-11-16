@@ -48,6 +48,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
+  itemsLanguages = [
+    { id: 1, name: 'Español', icon: '../../../../assets/icons/flags/flag-spain.png' },
+    { id: 2, name: 'English', icon: '../../../../assets/icons/flags/flag-uk.png' },
+  ]
+
   currentTheme = 'default';
 
   userMenu = [ 
@@ -56,6 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ];
   // items: Observable<any[]>;
   permissions: any = null;
+  language: string = '';
 
   constructor(
     private router: Router,
@@ -69,6 +75,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit() {
+
+      this.language = (this.utilitiesService.fnGetBrowserLocales().length > 1) ? (this.utilitiesService.fnGetBrowserLocales()[1]).toUpperCase() : 'ES';
+
       this.currentTheme = this.themeService.currentTheme;
       this.fnGetDataAccess();
       this.menuService.onItemClick().subscribe((resp) => {
@@ -110,12 +119,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   fnGetDataAccess() {
     let urlCollection = 'PermissionAreas';
     let urlLogo = 'UrlLogo';
-    this.utilitiesService.fnGetDataFBCallback(urlLogo, (response) => {
-      this.urlLogo = response;
-    });
-    
-    this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
-      let dataAccess = response;
+    // this.utilitiesService.fnGetDataFBCallback(urlLogo, (response) => {
+    //   // this.urlLogo = response;
+    // });
+
+    // this.utilitiesService.fnGetDataFBPromise(urlLogo).then((response) => {
+    //   console.log('response: ', response);
+    // });
+
+    const promise1 = this.utilitiesService.fnGetDataFBPromise(urlLogo);
+    const promise2 = this.utilitiesService.fnGetDataFBPromise(urlCollection);
+
+    Promise.all([promise1, promise2]).then((response) => {
+      console.log('response------: ', response[0]);
+      this.urlLogo = response[0].toString();
+      console.log('this.urlLogo: ', this.urlLogo);
+      let dataAccess = response[1];
+      console.log('dataAccess: ', dataAccess);
       this.accessModDirectionSwitcher = dataAccess['modDirectionSwitcher']['state'];
       this.accessModThemeSelect = dataAccess['modThemeSelect']['state'];
       this.accessIconToggleSidebar = dataAccess['modIconToggleSidebar']['state'];
@@ -124,7 +144,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.accessModEmail = dataAccess['modEmail']['state'];
       this.accessModNotifications = dataAccess['modNotifications']['state'];
       this.accessModPictureProfile = dataAccess['modPictureProfile']['state'];
+    }).catch((error) => {
+      console.log('error: ', error);
     });
+    
+    // this.utilitiesService.fnGetDataFBCallback(urlCollection, (response) => {
+    //   let dataAccess = response;
+    //   this.accessModDirectionSwitcher = dataAccess['modDirectionSwitcher']['state'];
+    //   this.accessModThemeSelect = dataAccess['modThemeSelect']['state'];
+    //   this.accessIconToggleSidebar = dataAccess['modIconToggleSidebar']['state'];
+    //   this.accessLogo = dataAccess['modLogo']['state'];
+    //   this.accessModSearch = dataAccess['modSearch']['state'];
+    //   this.accessModEmail = dataAccess['modEmail']['state'];
+    //   this.accessModNotifications = dataAccess['modNotifications']['state'];
+    //   this.accessModPictureProfile = dataAccess['modPictureProfile']['state'];
+    // });
 
 
   }
@@ -136,6 +170,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   changeTheme(themeName: string) {
     this.themeService.changeTheme(themeName);
+  }
+
+  changeLanguage(event) {
+    console.log('event: ', event);
   }
 
   toggleSidebar(): boolean {

@@ -27,6 +27,22 @@
     padding: 0!important;
   }
 
+  ::ng-deep .nb-theme-default nb-card-header {
+    display: block !important;
+  }
+
+  ::ng-deep .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .cursor-pointer {
+      cursor: pointer;
+  }
+
+  ul {
+      list-style-type: none;
+  }
+
   .header-container {
     display: flex;
     align-items: center;

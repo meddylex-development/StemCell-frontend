@@ -8,6 +8,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 import { 
   HttpClientModule, 
@@ -30,7 +31,12 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbToastrModule,
-  NbWindowModule,
+  NbWindowModule, 
+  NbTooltipModule,
+  NbCardModule,
+  NbActionsModule,
+  NbButtonModule,
+  NbInputModule,
 } from '@nebular/theme';
 import { 
   NbPasswordAuthStrategy, 
@@ -49,7 +55,11 @@ import { AuthInterceptorService } from './shared/api/services/auth-interceptor.s
 /* ************ START - Import modules - base component and routing ************ */
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HelpComponent } from './shared/components/modals/help/help.component';
 /* ************* END - Import modules - base component and routing ************* */
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+import { NgSelectModule } from '@ng-select/ng-select';
 
 export function setReturnDataMessages(module: string, res: HttpResponse<Object>): Object[] { return [res]; }
 export function setReturnDataErrors(module: string, res: HttpErrorResponse): Object[] { return [res]; }
@@ -63,14 +73,24 @@ const formSetting: any = {
 };
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HelpComponent],
   imports: [
+    FormsModule,
     BrowserModule,
+    NgSelectModule,
+    NbActionsModule,
+    NbTooltipModule, 
+    NbButtonModule,
+    NbInputModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
+    FontAwesomeModule,
     HttpClientModule,
     AppRoutingModule,
+    NbCardModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
+    NbTooltipModule,
     NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
@@ -134,15 +154,16 @@ const formSetting: any = {
           },
         }),
       ],
-      forms: {
-        login: formSetting,
-        register: formSetting,
-        requestPassword: formSetting,
-        resetPassword: formSetting,
-        logout: {
-          redirectDelay: 0,
-        },
-      },
+      forms: {},
+      // forms: {
+      //   login: formSetting,
+      //   register: formSetting,
+      //   requestPassword: formSetting,
+      //   resetPassword: formSetting,
+      //   logout: {
+      //     redirectDelay: 0,
+      //   },
+      // },
     }),
     /* ************+* END - Implement module NbPasswordAuthStrategy strategy ************* */
   ],
