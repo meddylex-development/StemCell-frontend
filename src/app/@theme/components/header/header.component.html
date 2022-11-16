@@ -11,7 +11,7 @@
   <nb-select *ngIf="accessModThemeSelect" [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
-  <ngx-layout-direction-switcher *ngIf="accessModThemeSelect" class="direction-switcher"></ngx-layout-direction-switcher>
+  <ngx-layout-direction-switcher *ngIf="accessModDirectionSwitcher" class="direction-switcher"></ngx-layout-direction-switcher>
 </div>
 
 <div class="header-container">
@@ -24,7 +24,7 @@
     <nb-action *ngIf="accessModNotifications" class="control-item" icon="bell-outline"></nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']">
       <nb-user
-        *ngIf="accessModPictureProfile" 
+        *ngIf="accessModPictureProfile"
         nbContextMenuTag="user-menu-header"
         [nbContextMenu]="userMenu"
         [onlyPicture]="userPictureOnly"
